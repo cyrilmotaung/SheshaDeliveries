@@ -2,38 +2,46 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>We Deliver — Kasi Play (Phase 1)</title>
-  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SheshaDeliveries — Ermelo</title>
+
+  <!-- Load new fonts: Poppins (headings) and Inter (body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700;800;900&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+
   <style>
     /* =====================================================
-       THEME — Smoke (grey), Coal (black), Fire (gold)
-       ===================================================== */
-    :root{
-      --smoke:#F3F4F6;      /* light grey background */
-      --paper:#FFFFFF;      /* card surfaces */
-      --coal:#0B0E10;       /* primary ink */
-      --coal-2:#161B22;     /* secondary ink */
-      --muted:#6B7280;      /* captions */
-      --gold:#D4AF37;       /* fire gold */
-      --gold-2:#F2D36B;     /* soft gold */
-      --line:rgba(11,14,16,.12);
-      --radius:18px;        /* rounded corners */
-      --shadow:0 16px 50px rgba(11,14,16,.12);
-      --shadow-sm:0 8px 24px rgba(11,14,16,.10);
+      THEME — NEW: Dark Mode (primary), Gold (accent)
+      ===================================================== */
+    :root {
+      /* New Color Palette */
+      --fire: #F59E0B;         /* Primary Gold/Amber */
+      --fire-soft: #FCD34D;   /* Light Gold/Amber */
+      --ink: #F5F5F5;         /* Primary Text (Off-white) */
+      --ink-2: #A3A3A3;       /* Secondary Text (Medium Gray) */
+      --bg: #0A0A0A;          /* Background (Off-black) */
+      --surface: #1C1C1C;     /* Card Surfaces (Dark Gray) */
+      --line: rgba(245, 245, 245, 0.1); /* Line color */
+
+      /* UI Styles */
+      --radius: 16px;
+      --shadow: 0 16px 50px rgba(0, 0, 0, .3);
+      --shadow-sm: 0 8px 24px rgba(0, 0, 0, .2);
+
+      /* Typography */
+      --font-heading: 'Poppins', sans-serif;
+      --font-body: 'Inter', sans-serif;
     }
-    *{box-sizing:border-box;margin:0;padding:0}
-    html,body{height:100%}
-    body{
-      font-family:"Manrope",system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial;
-      color:var(--coal);
-      /* Background gradient restored */
-      background:
-        radial-gradient(1200px 600px at -10% -20%, rgba(212,175,55,.08), transparent 60%),
-        radial-gradient(1200px 600px at 110% 120%, rgba(15,20,25,.06), transparent 60%),
-        var(--smoke);
-      min-height:100svh;
-      overflow-x: hidden; /* Prevents horizontal scroll */
+
+    * { box-sizing: border-box; margin: 0; padding: 0 }
+    html, body { height: 100% }
+    body {
+      font-family: var(--font-body);
+      color: var(--ink-2);
+      background-color: var(--bg);
+      min-height: 100svh;
+      overflow-x: hidden;
     }
 
     /* SVG Icon styles */
@@ -46,119 +54,155 @@
       fill: currentColor;
       vertical-align: middle;
     }
-    .icon-fill { fill: currentColor; stroke: none; }
-    .icon-stroke { fill: none; stroke: currentColor; stroke-width: 2px; }
 
-    /* Layout: Full width on mobile, container on desktop */
-    .container{
-      width: 100%; /* Mobile-first: full width */
-      margin-inline:auto;
+    /* Layout */
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin-inline: auto;
+      padding-left: 16px;
+      padding-right: 16px;
     }
 
     /* ---------------- NAV (Desktop) ---------------- */
-    .nav{
+    .nav {
       display: none; /* Mobile-first: hidden */
-      position:sticky;top:0;z-index:50;
-      backdrop-filter:blur(8px) saturate(1.1);
-      background:var(--paper); /* White navbar */
-      border-bottom:1px solid var(--line);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(12px) saturate(1.1);
+      background: rgba(10, 10, 10, 0.7); /* Blurred dark bg */
+      border-bottom: 1px solid var(--line);
     }
-    .nav-inner{
-      display:grid;
-      grid-template-columns: 1fr auto 1fr; /* For centered time */
-      align-items:center;
-      justify-content:space-between;
-      padding:14px 0;
+    .nav-inner {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 0;
+      max-width: 1200px;
+      margin-inline: auto;
+      padding-inline: 16px;
     }
-    .brand{display:flex;align-items:center;gap:12px;font-weight:800;letter-spacing:.2px; cursor: pointer;}
-    .logo{
-      width:42px;height:42px;
-      border-radius:14px;display:grid;place-items:center;
-      background:radial-gradient(80% 80% at 30% 30%, var(--gold-2), var(--gold));
-      color:#111;box-shadow:var(--shadow-sm);
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      font-family: var(--font-heading);
+      letter-spacing: .2px;
+      cursor: pointer;
+      color: var(--ink);
     }
-    .logo span{font-size:22px}
-    .nav-links{display:flex;gap:12px;align-items:center; justify-content: flex-end;}
-    .link{color:var(--coal);opacity:.9;text-decoration:none;font-weight:700}
-    .button{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:12px 16px;border-radius:14px;border:1px solid var(--line);background:var(--paper);color:var(--coal);font-weight:800;cursor:pointer;transition:transform .04s ease, box-shadow .2s}
-    .button:hover{box-shadow:var(--shadow-sm)}
-    .button.primary{background:linear-gradient(135deg,var(--gold),var(--gold-2));border:0;color:#111;box-shadow:0 14px 40px rgba(212,175,55,.28)}
-    .button.whatsapp{background:linear-gradient(135deg,#25D366,#128C7E);border:0;color:#fff;box-shadow:0 14px 40px rgba(18,140,126,.35)}
-    .button.danger{background:linear-gradient(135deg,#ff7a7a,#ff3b3b);border:0;color:#fff}
-    .button:active{transform:translateY(1px)}
-    .button,.pill,.qbtn,.remove{min-height:44px}
-    .button{min-height:48px}
+    .logo {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      background: var(--fire);
+      color: var(--bg); /* Black text on gold */
+      box-shadow: var(--shadow-sm);
+    }
+    .logo span { font-size: 22px }
+    .nav-links { display: flex; gap: 12px; align-items: center; justify-content: flex-end; }
+    .link { color: var(--ink); opacity: .9; text-decoration: none; font-weight: 700 }
     
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 12px 16px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: var(--surface);
+      color: var(--ink);
+      font-weight: 700;
+      font-family: var(--font-body);
+      cursor: pointer;
+      transition: all .1s ease;
+      min-height: 48px;
+    }
+    .button:hover { box-shadow: var(--shadow-sm); transform: translateY(-2px); border-color: var(--line); }
+    .button.primary {
+      background: var(--fire);
+      border-color: var(--fire);
+      color: #000; /* Black text on gold */
+      box-shadow: 0 10px 30px rgba(245, 158, 11, .25);
+    }
+    .button.whatsapp {
+      background: #25D366;
+      border-color: #25D366;
+      color: #fff;
+      box-shadow: 0 10px 30px rgba(37, 211, 102, .25);
+    }
+    .button.danger { background: #ff3b3b; border-color: #ff3b3b; color: #fff; }
+    .button:active { transform: translateY(1px); }
+
     /* Disabled button style */
     .button.disabled {
-      background: var(--smoke);
-      color: var(--muted);
+      background: var(--surface);
+      color: var(--ink-2);
       cursor: not-allowed;
       box-shadow: none;
-      opacity: 0.7;
+      opacity: 0.4;
       pointer-events: none;
     }
 
     /* Desktop Timer Styles */
     .nav-timer {
-        text-align: center;
-        font-size: 0.85rem;
-        line-height: 1.2;
-        padding: 0 10px;
+      text-align: center;
+      font-size: 0.85rem;
+      line-height: 1.2;
+      padding: 0 10px;
+      font-weight: 500;
     }
     .nav-timer .time {
-        font-weight: 800;
-        color: var(--coal);
+      font-weight: 700;
+      color: var(--ink);
     }
     .nav-timer .countdown {
-        font-weight: 700;
-        font-size: 0.75rem;
-        color: var(--muted);
+      font-weight: 700;
+      font-size: 0.75rem;
+      color: var(--ink-2);
     }
-    .nav-timer .countdown.open {
-        color: #128C7E; /* WhatsApp Green */
-    }
-    .nav-timer .countdown.closed {
-        color: #b00; /* Danger Red */
-    }
+    .nav-timer .countdown.open { color: #4ADE80; } /* Bright Green */
+    .nav-timer .countdown.closed { color: #F87171; } /* Bright Red */
 
 
     /* ---------------- NAV (Mobile) ---------------- */
     .nav-mobile {
-      display: grid; /* Show on mobile */
+      display: grid;
       grid-template-columns: 1fr 1fr 1fr;
       position: sticky;
       bottom: 0;
       z-index: 50;
-      background:var(--paper); /* White navbar */
+      background: rgba(18, 18, 18, 0.9);
       backdrop-filter: blur(10px) saturate(1.1);
       border-top: 1px solid var(--line);
-      padding: 6px 10px 10px 10px; /* More padding at bottom for safe area */
+      padding: 6px 10px 10px 10px;
     }
     .nav-mobile .n-link {
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 4px;
-      font-weight: 800;
-      font-size: 0.75rem; /* 12px */
-      color: var(--muted);
+      font-weight: 700;
+      font-size: 0.75rem;
+      color: var(--ink-2);
       text-decoration: none;
       padding: 8px 4px;
       border-radius: 12px;
     }
-    .nav-mobile .n-link .icon {
-      font-size: 24px;
-    }
+    .nav-mobile .n-link .icon { font-size: 24px; }
     .nav-mobile .n-link.active {
-      color: var(--coal);
-      background: rgba(212,175,55,.15); /* Soft gold background */
+      color: var(--fire);
+      background: rgba(245, 158, 11, .1); /* Soft Gold background */
     }
-    .nav-mobile .n-link.cart-link {
-      position: relative;
-    }
+    .nav-mobile .n-link.cart-link { position: relative; }
     .nav-mobile .n-link.disabled {
-      color: var(--muted);
+      color: #737373; /* Muted gray */
       pointer-events: none;
       opacity: 0.6;
       background: transparent;
@@ -168,87 +212,97 @@
       position: absolute;
       top: 4px;
       right: 18px;
-      background: var(--gold);
-      color: #111;
+      background: var(--fire);
+      color: var(--bg);
       font-size: 10px;
       font-weight: 900;
       line-height: 1;
       padding: 3px 5px;
-      border-radius: 99px;
+      border-radius: 999px;
       min-width: 18px;
       text-align: center;
-      border: 2px solid #fff;
+      border: 2px solid var(--surface);
     }
 
     /* ---------------- HERO ---------------- */
-    /* Mobile-first: Full width with padding */
-    .hero{
-      min-height:auto;
-      padding: 16px; /* Reduced for less scroll */
+    .hero {
+      padding: 16px 16px 96px 16px; /* Full padding on mobile */
     }
-    .hero .grid{
-      display:grid;
-      gap:22px;
-      grid-template-columns:1fr;
-    }
+    /* Removed .hero .grid, now default block layout */
 
-    .hero-brand{display:flex;align-items:center;gap:12px;margin-bottom:8px}
-    .hero-logo{
-      width:72px;height:72px;
-      border-radius:18px;display:grid;place-items:center;
-      background:radial-gradient(80% 80% at 30% 30%, var(--gold-2), var(--gold));
-      color:#111;box-shadow:var(--shadow);
+    .hero-brand-card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: 16px;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--line);
     }
-    .hero-logo .icon{font-size:34px;line-height:1}
-    .hero-title{font-family:"Quicksand",Manrope,system-ui;font-weight:700;font-size:clamp(28px,5vw,52px);line-height:1.06;letter-spacing:.2px;}
+    .hero-brand { display: flex; align-items: center; gap: 12px; margin-bottom: 8px }
+    .hero-logo {
+      width: 72px;
+      height: 72px;
+      border-radius: 18px;
+      display: grid;
+      place-items: center;
+      background: var(--fire);
+      color: var(--bg);
+      box-shadow: var(--shadow);
+    }
+    .hero-logo .icon { font-size: 34px; line-height: 1 }
+    .hero-title {
+      font-family: var(--font-heading);
+      font-weight: 800;
+      font-size: clamp(28px, 5vw, 52px);
+      line-height: 1.06;
+      color: var(--ink);
+    }
 
     /* Mobile Timer (Visible only on mobile homepage) */
     .mobile-timer {
-        background: var(--paper);
-        border: 1px solid var(--line);
-        border-radius: var(--radius);
-        padding: 10px;
-        margin-top: 12px;
-        text-align: center;
-        box-shadow: var(--shadow-sm);
-        display: block;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 10px;
+      margin-top: 22px;
+      text-align: center;
+      box-shadow: var(--shadow-sm);
+      display: block;
     }
 
     /* Operating Message */
     .operating-message {
-      background: var(--paper);
+      background: var(--surface);
       border: 1px solid var(--line);
       border-radius: var(--radius);
       padding: 16px;
       text-align: center;
       box-shadow: var(--shadow-sm);
+      height: 100%; /* For grid layout */
     }
     .operating-message h3 {
-      font-weight: 900;
+      font-weight: 800;
+      font-family: var(--font-heading);
+      color: var(--ink);
       font-size: 1.2rem;
       margin-bottom: 8px;
     }
     .operating-message p {
-      color: var(--muted);
-      font-weight: 700;
+      color: var(--ink-2);
+      font-weight: 500;
       margin-bottom: 4px;
       line-height: 1.4;
     }
     .contact-info {
       margin-top: 16px;
+      font-weight: 500;
+    }
+    .contact-info p { margin-bottom: 8px; }
+    .contact-info a {
+      color: var(--ink);
+      text-decoration: none;
       font-weight: 700;
     }
-    .contact-info p {
-      margin-bottom: 8px;
-    }
-    .contact-info a {
-      color: var(--coal);
-      text-decoration: none;
-      font-weight: 800;
-    }
-    .contact-info a:hover {
-      text-decoration: underline;
-    }
+    .contact-info a:hover { text-decoration: underline; }
     
     /* Social Media Buttons */
     .social-buttons {
@@ -256,7 +310,7 @@
       justify-content: center;
       gap: 12px;
       margin-top: 16px;
-      flex-wrap: wrap; /* Added for safety */
+      flex-wrap: wrap;
     }
     .social-btn {
       display: inline-flex;
@@ -265,189 +319,347 @@
       width: 44px;
       height: 44px;
       border-radius: 999px; /* circle */
-      background: var(--paper);
-      color: var(--coal);
+      background: var(--surface);
+      color: var(--ink);
       border: 1px solid var(--line);
       box-shadow: var(--shadow-sm);
       text-decoration: none;
-      transition: transform .1s ease, box-shadow .1s ease;
+      transition: all .1s ease;
     }
     .social-btn:hover {
       transform: translateY(-2px);
       box-shadow: var(--shadow);
+      border-color: var(--fire-soft);
+      color: var(--fire-soft);
     }
-    .social-btn .icon {
-      font-size: 24px;
-    }
+    .social-btn .icon { font-size: 24px; }
     .social-btn.wa { color: #25D366; }
     .social-btn.fb { color: #1877F2; }
     .social-btn.ig { color: #E4405F; }
-    .social-btn.tk { color: #000000; }
-    .social-btn.x { color: #000000; }
-    .social-btn.call { color: #0B0E10; }
+    .social-btn.call { color: var(--ink); }
 
     /* Admin Demo Panel */
     .admin-panel {
-        background: var(--paper);
-        border: 2px dashed var(--gold);
-        border-radius: var(--radius);
-        padding: 16px;
-        margin-top: 12px;
-        box-shadow: var(--shadow-sm);
-        display: grid;
-        gap: 10px;
+      background: var(--surface);
+      border: 2px dashed var(--fire);
+      border-radius: var(--radius);
+      padding: 16px;
+      margin-top: 22px;
+      box-shadow: var(--shadow-sm);
+      display: grid;
+      gap: 10px;
     }
     .admin-panel .title {
-        font-weight: 900;
-        font-size: 1.1rem;
-        color: var(--coal);
-        text-align: center;
+      font-weight: 800;
+      font-family: var(--font-heading);
+      font-size: 1.1rem;
+      color: var(--ink);
+      text-align: center;
     }
     .admin-panel .field {
-        background: var(--smoke);
-        border: 1px solid var(--line);
-        padding: 8px;
-        border-radius: 10px;
+      background: var(--bg);
+      border: 1px solid var(--line);
+      padding: 8px;
+      border-radius: 10px;
     }
     .admin-panel .btn-group {
-        display: flex;
-        gap: 10px;
-        flex-wrap: wrap;
-        justify-content: center;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
     }
 
-
-    .ride-anim{display:none} /* replaced by ride-photos */
-    .hero-bg{background:radial-gradient(800px 320px at 20% 0%, rgba(212,175,55,.10), transparent 60%), linear-gradient(180deg,#0F1418 0%, #111418 100%);border-radius:16px;padding:8px}
-    .ride-photos{
-      position:relative;
-      border-radius:16px;
-      overflow:hidden;
-      border:1px solid var(--line);
-      box-shadow:var(--shadow-sm);
-      height:clamp(220px, 30vh, 420px); /* Reduced for less scroll */
+    /* Slideshow */
+    .hero-main-card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: 8px;
+      border: 1px solid var(--line);
     }
-    .ride-photos img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;animation:fade 16s infinite ease-in-out;background:#e5e7eb;transition:opacity .3s ease}
-    .ride-photos img:nth-child(1){animation-delay:0s;opacity:1}
-    .ride-photos img:nth-child(2){animation-delay:4s}
-    .ride-photos img:nth-child(3){animation-delay:8s}
-    .ride-photos img:nth-child(4){animation-delay:12s}
-    @keyframes fade{0%,25%{opacity:1}33%,100%{opacity:0}}
-    .ride-photos .sticker{position:absolute;left:12px;bottom:12px;background:rgba(212,175,55,.95);color:#111;padding:6px 10px;border-radius:12px;font-weight:900;letter-spacing:.02em}
-    @media (prefers-reduced-motion: reduce){.ride-photos img{animation:none;opacity:1}}
-
-    .zone-panel{margin-top:12px;background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:12px;display:grid;gap:10px}
-    .caption-title{font-weight:900;font-size:18px;letter-spacing:.02em}
-    .zones{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap: 12px;align-items:flex-start}
-    @media(min-width:640px){.zones{gap:12px}}
-
-    .pill{
-      padding:12px 14px;
-      border-radius:999px;
-      background:#fff;
-      border:2px solid rgba(22,27,34,.12);
-      color:var(--coal);
-      font-weight:800;
-      text-align:center;
-      cursor:pointer;
-      transition:transform .05s ease, background .18s;
-      min-height:44px;
+    .hero-brand-card {
+      background: none;
+      border: none;
+      box-shadow: none;
     }
-    .pill:hover{transform:translateY(-2px)}
-    .pill.active,.pill:focus{background:linear-gradient(135deg,var(--gold),var(--gold-2));color:#111}
-
-    /* Services grid (replaces any photos) */
-    .hero-card{
-      position:relative;
-      border-radius:var(--radius);
-      overflow:hidden;
-      box-shadow:var(--shadow);
-      border:1px solid var(--line);
-      min-height: auto; /* Reduced for less scroll */
-      background:#fff;
+    .hero-bg {
+      background: transparent;
+      padding: 0;
+      margin-top: 8px;
     }
-    .hero-services{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;padding:16px}
-    .svc{
-      display:grid;
-      gap:6px;
-      align-content:start;
-      background:#fff;
-      border:1px solid var(--line);
-      border-radius:16px;
-      box-shadow:var(--shadow-sm);
-      padding:12px;
+    .ride-photos {
+      position: relative;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow-sm);
+      height: clamp(220px, 30vh, 420px);
+    }
+    .ride-photos img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      animation: fade 16s infinite ease-in-out;
+      background: #333;
+      transition: opacity .3s ease;
+    }
+    .ride-photos img:nth-child(1) { animation-delay: 0s; opacity: 1 }
+    .ride-photos img:nth-child(2) { animation-delay: 4s }
+    .ride-photos img:nth-child(3) { animation-delay: 8s }
+    .ride-photos img:nth-child(4) { animation-delay: 12s }
+    @keyframes fade { 0%, 25% { opacity: 1 } 33%, 100% { opacity: 0 } }
+    .ride-photos .sticker {
+      position: absolute;
+      left: 12px;
+      bottom: 12px;
+      background: var(--fire);
+      color: var(--bg);
+      padding: 6px 10px;
+      border-radius: 10px;
+      font-weight: 800;
+      font-family: var(--font-heading);
+    }
+    @media (prefers-reduced-motion: reduce) { .ride-photos img { animation: none; opacity: 1 } }
+
+    .zone-panel {
+      margin-top: 22px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 16px;
+      display: grid;
+      gap: 12px;
+      box-shadow: var(--shadow-sm);
+    }
+    .caption-title {
+      font-weight: 800;
+      font-family: var(--font-heading);
+      color: var(--ink);
+      font-size: 18px;
+    }
+    .zones { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+    @media(min-width: 640px) { .zones { grid-template-columns: repeat(3, 1fr); } }
+
+
+    .pill {
+      padding: 12px 14px;
+      border-radius: 999px;
+      background: var(--surface);
+      border: 2px solid var(--line);
+      color: var(--ink);
+      font-weight: 700;
+      text-align: center;
+      cursor: pointer;
+      transition: all .1s ease;
+      min-height: 44px;
+    }
+    .pill:hover { transform: translateY(-2px); border-color: var(--fire-soft); }
+    .pill.active, .pill:focus {
+      background: var(--fire);
+      color: var(--bg);
+      border-color: var(--fire);
+    }
+
+    /* Services grid */
+    .hero-card {
+      position: relative;
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--line);
+      min-height: auto;
+      background: var(--surface);
+      height: 100%; /* For grid */
+    }
+    .hero-services { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 16px; }
+    .svc {
+      display: grid;
+      gap: 6px;
+      align-content: start;
+      background: var(--bg);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      box-shadow: var(--shadow-sm);
+      padding: 12px;
       align-items: center;
       text-align: center;
     }
-    .s-ico{font-size:28px;line-height:1; margin: auto; color: var(--gold);}
-    .s-name{font-weight:900}
-    .s-desc{color:var(--muted);font-weight:700;font-size:.9rem}
+    .s-ico { font-size: 28px; line-height: 1; margin: auto; color: var(--fire); }
+    .s-name { font-weight: 700; font-family: var(--font-heading); color: var(--ink); }
+    .s-desc { color: var(--ink-2); font-weight: 500; font-size: .9rem; }
 
     /* Lists & cards */
-    .section{
-      padding: 16px; /* Reduced for less scroll */
-      border-top:1px solid var(--line);
-      /* Add padding-bottom to keep content above sticky nav */
-      padding-bottom: 96px; 
-    }
-    /* Add padding to last child to clear footer */
-    .hero {
-      padding-bottom: 96px;
+    .section {
+      padding: 16px 16px 96px 16px;
+      border-top: 1px solid var(--line);
     }
     
-    .card{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:14px;box-shadow:var(--shadow-sm)}
-    .grid-auto{display:grid;grid-template-columns:1fr;gap:12px}
-
-    .rest{display:grid;grid-template-columns:92px 1fr auto;gap:12px;align-items:center;border-radius:16px;background:#fff;padding:12px;border:1px solid var(--line);box-shadow:var(--shadow-sm);cursor:pointer}
-    .rest.disabled { opacity: 0.6; pointer-events: none; }
-    .rest .ph{width:92px;aspect-ratio:4/3;border-radius:12px;background:#eee;background-size:cover;background-position:center}
-    .rest h3{font-size:1.1rem}
-    .rest > div:last-child{font-size:22px;opacity:.7}
-    .rest .icon { font-size: 20px; color: var(--muted); }
-
-    .menu-banner{height:220px;border-radius:18px;background:linear-gradient(135deg,var(--gold),var(--gold-2));border:1px solid var(--line)}
-    .menu-grid{display:grid;grid-template-columns:1fr;gap:10px}
-    @media(min-width:520px){.menu-grid{grid-template-columns:repeat(2,1fr)}}
-    @media(min-width:900px){.menu-grid{grid-template-columns:repeat(3,1fr)}}
-    .menu-item{background:#fff;border:1px solid var(--line);border-radius:16px;padding:12px;display:grid;gap:6px;box-shadow:var(--shadow-sm)}
-    .price{font-weight:900}
-
-    /* Utility text classes added */
-    .muted{color:var(--muted);font-weight:700}
-    .small{color:var(--muted);font-weight:700;font-size:.9rem}
-    .qtitle{font-weight:900}
-    /* Quick restaurant card */
-    .rcard{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      background:#fff;
-      border:1px solid var(--line);
-      border-radius:12px;
-      padding:10px;
-      box-shadow:var(--shadow-sm);
-      cursor:pointer
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 16px;
+      box-shadow: var(--shadow-sm);
     }
-    .rcard.disabled { opacity: 0.6; pointer-events: none; }
-    .rcard .ph{width:92px;height:72px;border-radius:10px;background:#eee;background-size:cover;background-position:center}
+    
+    .restaurant-grid {
+      display: grid;
+      grid-template-columns: 1fr; /* Mobile: 1 column */
+      gap: 16px;
+    }
+    @media(min-width: 640px) {
+      .restaurant-grid {
+        grid-template-columns: repeat(2, 1fr); /* Tablet/Desktop: 2 columns */
+      }
+    }
+
+    .rest-card {
+      background: var(--surface);
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow-sm);
+      cursor: pointer;
+      overflow: hidden;
+      transition: all .1s ease;
+    }
+    .rest-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow);
+      border-color: var(--fire-soft);
+    }
+    .rest-card.disabled { opacity: 0.6; pointer-events: none; }
+    .rest-card .ph {
+      width: 100%;
+      aspect-ratio: 16/9;
+      background: #333;
+      background-size: cover;
+      background-position: center;
+      border-bottom: 1px solid var(--line);
+    }
+    .rest-card .info {
+      padding: 12px;
+    }
+    .rest-card h3 {
+      font-size: 1.1rem;
+      font-weight: 800;
+      font-family: var(--font-heading);
+      color: var(--ink);
+    }
+    .rest-card .details {
+      color: var(--ink-2);
+      font-weight: 500;
+      font-size: 0.9rem;
+    }
+
+
+    .menu-banner {
+      height: 220px;
+      border-radius: 18px;
+      background-color: var(--fire);
+      border: 1px solid var(--line);
+      background-size: cover;
+      background-position: center;
+    }
+    .menu-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
+    @media(min-width: 520px) { .menu-grid { grid-template-columns: repeat(2, 1fr) } }
+    .menu-item {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 12px;
+      display: grid;
+      gap: 6px;
+      box-shadow: var(--shadow-sm);
+    }
+    .menu-item h3 {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      color: var(--ink);
+    }
+    .price { font-weight: 800; color: var(--fire); }
+
+    /* Utility text classes */
+    .muted { color: var(--ink-2); font-weight: 500; }
+    .small { color: var(--ink-2); font-weight: 500; font-size: .9rem; }
+    .qtitle { font-weight: 800; font-family: var(--font-heading); color: var(--ink); }
+    
+    .quick-grid {
+      display: grid;
+      grid-template-columns: 1fr; /* Mobile: 1 column */
+      gap: 12px;
+      padding-top: 12px;
+    }
+    /* Popular items are simple rows, not full cards */
+    .rest-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--bg);
+      padding: 8px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      cursor: pointer;
+      transition: all .1s ease;
+    }
+    .rest-row:hover {
+      border-color: var(--fire-soft);
+      transform: translateX(2px);
+    }
+    .rest-row .ph {
+      width: 50px;
+      height: 50px;
+      border-radius: 8px;
+      background-size: cover;
+      background-position: center;
+      flex-shrink: 0;
+    }
+    .rest-row h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--ink);
+    }
+    .rest-row .details {
+      color: var(--ink-2);
+      font-weight: 500;
+      font-size: 0.85rem;
+    }
+    .rest-row.disabled { opacity: 0.6; pointer-events: none; }
+
 
     /* Cart */
-    .cart{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:12px;box-shadow:var(--shadow-sm)}
-    .row{display:grid;grid-template-columns:1fr auto auto auto;gap:12px;align-items:center;padding:10px 0;border-bottom:1px dashed var(--line)}
-    .row:last-child{border-bottom:0}
-    .qty{display:inline-grid;grid-auto-flow:column;grid-auto-columns:34px;align-items:center;justify-content:center;gap:8px}
-    .qbtn{height:34px;width:34px;border-radius:10px;border:1px solid var(--line);background:#fff;font-weight:900;cursor:pointer}
-    .remove{height:34px;width:34px;border-radius:10px;border:1px solid var(--line);background:#fff;font-weight:900;cursor:pointer; color: #b00;}
-    .total{display:flex;justify-content:space-between;align-items:center;margin-top:12px;padding-top:12px;border-top:2px solid var(--line);font-weight:900}
+    .cart { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 12px; box-shadow: var(--shadow-sm); }
+    .row { display: grid; grid-template-columns: 1fr auto auto auto; gap: 12px; align-items: center; padding: 10px 0; border-bottom: 1px dashed var(--line); }
+    .row:last-child { border-bottom: 0 }
+    .row div:first-child { font-weight: 700; color: var(--ink); }
+    .qty { display: inline-grid; grid-auto-flow: column; grid-auto-columns: 34px; align-items: center; justify-content: center; gap: 8px; }
+    .qbtn { height: 34px; width: 34px; border-radius: 10px; border: 1px solid var(--line); background: var(--bg); color: var(--ink); font-weight: 900; cursor: pointer; }
+    .remove { height: 34px; width: 34px; border-radius: 10px; border: 1px solid var(--line); background: var(--bg); font-weight: 900; cursor: pointer; color: #F87171; }
+    .total { display: flex; justify-content: space-between; align-items: center; margin-top: 12px; padding-top: 12px; border-top: 2px solid var(--line); font-weight: 800; font-family: var(--font-heading); color: var(--ink); }
+    .total div:last-child { color: var(--fire); font-size: 1.1rem; }
 
     /* Inputs */
-    .field{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:center;background:#fff;border:1px solid var(--line);padding:12px;border-radius:14px;box-shadow:var(--shadow-sm)}
-    .field .icon { font-size: 20px; color: var(--muted); }
-    .field.search-field { grid-template-columns: auto 1fr auto; }
-    .field input,.field textarea{width:100%;background:transparent;border:0;color:var(--coal);font-weight:700;outline:0}
-    .field textarea{min-height:72px;resize:vertical}
+    .field { display: grid; grid-template-columns: auto 1fr; gap: 10px; align-items: center; background: var(--bg); border: 1px solid var(--line); padding: 12px; border-radius: 12px; box-shadow: var(--shadow-sm); }
+    .field .icon { font-size: 20px; color: var(--ink-2); }
+    .field.search-field { grid-template-columns: auto 1fr; }
+    .field input, .field textarea {
+      width: 100%;
+      background: transparent;
+      border: 0;
+      color: var(--ink);
+      font-weight: 500;
+      font-family: var(--font-body);
+      outline: 0;
+    }
+    .field input::placeholder, .field textarea::placeholder { color: var(--ink-2); opacity: 0.8; }
+    .field textarea { min-height: 72px; resize: vertical }
+    .field:focus-within { border-color: var(--fire); box-shadow: 0 0 0 2px rgba(245, 158, 11, .2); }
 
-    .button:focus-visible,.link:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--gold-2);outline-offset:2px}
+    .button:focus-visible, .link:focus-visible, input:focus-visible, textarea:focus-visible {
+      outline: 2px solid var(--fire-soft);
+      outline-offset: 2px;
+    }
 
     /* Modals/Popups */
     .modal-overlay {
@@ -456,20 +668,26 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.6);
+      background: rgba(0, 0, 0, 0.7);
       display: none;
       justify-content: center;
       align-items: center;
       z-index: 1000;
     }
     .modal-box {
-      background: var(--paper);
+      background: var(--surface);
       border-radius: var(--radius);
       padding: 20px;
       max-width: 90%;
       width: 400px;
       box-shadow: var(--shadow);
       position: relative;
+      border: 1px solid var(--line);
+    }
+    .modal-box h3 {
+      font-family: var(--font-heading);
+      font-weight: 800;
+      color: var(--ink);
     }
     .modal-close {
       position: absolute;
@@ -479,7 +697,7 @@
       border: none;
       font-size: 1.5rem;
       cursor: pointer;
-      color: var(--muted);
+      color: var(--ink-2);
       padding: 5px;
     }
     .order-meta {
@@ -488,11 +706,11 @@
       border-bottom: 1px solid var(--line);
       padding-bottom: 8px;
       margin-bottom: 12px;
-      font-weight: 700;
+      font-weight: 500;
     }
     .order-meta strong {
-      color: var(--coal);
-      font-weight: 900;
+      color: var(--ink);
+      font-weight: 700;
     }
     .order-content {
       white-space: pre-wrap;
@@ -500,10 +718,10 @@
       font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
       font-size: 0.9rem;
       margin-bottom: 16px;
-      background: var(--smoke);
+      background: var(--bg);
       padding: 12px;
       border-radius: 12px;
-      color: var(--coal-2);
+      color: var(--ink-2);
     }
     .modal-actions {
       display: flex;
@@ -513,164 +731,127 @@
 
     /* Toast Notification (Item Added) */
     .toast-notification {
-        position: fixed;
-        bottom: 70px; /* Above sticky footer */
-        left: 50%;
-        transform: translateX(-50%);
-        background: var(--coal);
-        color: var(--paper);
-        padding: 12px 20px;
-        border-radius: 999px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-        z-index: 900;
-        opacity: 0;
-        transition: opacity 0.3s ease-in-out;
-        font-weight: 700;
-        font-size: 0.9rem;
-        pointer-events: none;
+      position: fixed;
+      bottom: 80px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--ink);
+      color: var(--bg);
+      padding: 12px 20px;
+      border-radius: 999px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      z-index: 900;
+      opacity: 0;
+      transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+      font-weight: 700;
+      font-size: 0.9rem;
+      pointer-events: none;
     }
     .toast-notification.show {
-        opacity: 1;
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
     }
     
     /* Order Success Page */
     .success-icon {
-        color: #25D366; /* WhatsApp Green */
-        font-size: 5rem;
-        margin-bottom: 16px;
+      color: #25D366; /* WhatsApp Green */
+      font-size: 5rem;
+      margin-bottom: 16px;
     }
     .payment-options {
-        display: grid;
-        gap: 12px;
-        margin-top: 16px;
+      display: grid;
+      gap: 12px;
+      margin-top: 16px;
     }
     .payment-method {
-        background: var(--smoke);
-        padding: 12px;
-        border-radius: 12px;
-        font-weight: 700;
-        text-align: left;
+      background: var(--bg);
+      padding: 12px;
+      border-radius: 12px;
+      font-weight: 500;
+      text-align: left;
     }
     .payment-method strong {
-        color: var(--coal);
-        font-weight: 900;
+      color: var(--ink);
+      font-weight: 700;
     }
     .payment-method span {
-        font-size: 0.8rem;
-        display: block;
-        color: var(--muted);
+      font-size: 0.8rem;
+      display: block;
+      color: var(--ink-2);
     }
     
     /* App Footer */
     .app-footer {
-        text-align: center;
-        font-size: 0.75rem;
-        color: var(--muted);
-        padding: 8px 16px 8px 16px; /* Top padding is key to separate from content */
-        margin-top: 20px; /* Separator from the main content */
+      text-align: center;
+      font-size: 0.75rem;
+      color: var(--ink-2);
+      padding: 8px 16px 8px 16px;
+      margin-top: 20px;
     }
     .app-footer em {
-        display: block;
-        margin-top: 4px;
-        font-style: italic;
+      display: block;
+      margin-top: 4px;
+      font-style: italic;
+    }
+
+    /* NEW: Info Grid for Desktop */
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 22px;
+      margin-top: 22px;
     }
 
 
     /* =======================================
-       Desktop & Tablet Media Queries
-       ======================================= */
-    @media(min-width:768px){
+      Desktop & Tablet Media Queries
+      ======================================= */
+    @media(min-width: 768px) {
       /* Show desktop nav, hide mobile nav */
       .nav { display: block; }
-      .nav-inner { width:min(1200px,95vw); margin-inline:auto; }
       .nav-mobile { display: none; }
       .mobile-timer { display: none; }
 
-      /* Restore container widths */
       .container {
-        width:min(1200px,95vw);
+        padding-left: 0;
+        padding-right: 0;
       }
 
-      /* Restore layout for hero */
-      .hero{
-        min-height:82svh;
-        display:grid;
-        align-items:start; /* Set alignment back to start on desktop */
-        padding:clamp(18px,4vw,40px) 0;
+      /* NEW: Hero Layout */
+      .hero {
+        padding: 40px 0 40px 0;
       }
-      .hero .grid{
-        display: grid;
-        grid-template-columns:1.05fr 1fr;
+
+      /* NEW: 3-Column Info Grid */
+      .info-grid {
+        grid-template-columns: repeat(3, 1fr);
       }
-      
-      /* Desktop Ordering: Left (Primary) content always first column */
-      .hero > div:first-child { order: 1; }
-      
-      /* Right column: Slideshow, Message, Services, Admin stack vertically */
-      .hero-right-column {
-          display: grid;
-          gap: 22px;
-          grid-template-rows: auto auto auto 1fr; 
-          order: 2;
-      }
-      .hero-bg { order: 1; margin-top: 0; }
-      .operating-message { order: 2; margin-top: 0; }
-      .hero-card { order: 3; margin-top: 0; }
-      .admin-panel { order: 4; margin-top: 0; }
-      
-      /* Services grid items */
-      .hero-services {
-         grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+
+      .card-popular {
+        height: 100%; /* Match height of other grid items */
       }
       
       /* Make Admin Panel buttons hide/show */
       #admin-open-btn-wrapper { display: var(--admin-open-display, none); }
       #admin-close-btn-wrapper { display: var(--admin-close-display, none); }
-      
     }
       
     /* Responsive overrides for smaller layouts */
-    @media(max-width:767px){
-        .hero .grid {
-            display: flex;
-            flex-direction: column;
-        }
-        
-        /* Left Column (Brand, Zones, Popular) */
-        .hero > div:first-child { order: 1; }
-        
-        /* Right Column (Slideshow, Message, Services, Admin) */
-        .hero-right-column {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            /* ORDER 2: This entire block goes BELOW the Brand/Title */
-            order: 2;
-        }
-        
-        /* Rearrange elements WITHIN the right column for mobile flow: Slideshow, Message, Services, Admin */
-        /* Slideshow, Operating Message, Services, Admin */
-        .hero-bg { order: 1; margin-top: 12px; }
-        .operating-message { order: 2; margin-top: 12px; }
-        .hero-card { order: 3; margin-top: 0; }
-        .admin-panel { order: 4; margin-top: 12px; }
-        
-        .row{grid-template-columns:1fr auto;grid-template-areas:"name price" "qty remove"}
-        .row > div:nth-child(1){grid-area:name}
-        .row > .qty{grid-area:qty}
-        .row > div:nth-child(3){grid-area:price;justify-self:end}
-        .row > button.remove{grid-area:remove;justify-self:end}
-        .menu-grid{grid-template-columns:1fr}
-        
-        .admin-panel {
-            margin-bottom: 20px;
-        }
-        .app-footer {
-            margin-bottom: 70px;
-        }
-    }
-    @media(min-width:561px) and (max-width:1024px){
-      .menu-grid{grid-template-columns:repeat(2,1fr)}
+    @media(max-width: 767px) {
+      /* Mobile layout is now default block stacking */
+      .admin-panel { margin-bottom: 20px; }
+      .app-footer { margin-bottom: 70px; }
+      
+      .row {
+        grid-template-columns: 1fr auto;
+        grid-template-areas: "name price" "qty remove";
+      }
+      .row > div:nth-child(1) { grid-area: name }
+      .row > .qty { grid-area: qty }
+      .row > div:nth-child(3) { grid-area: price; justify-self: end }
+      .row > button.remove { grid-area: remove; justify-self: end }
+      
+      .menu-grid { grid-template-columns: 1fr }
     }
   </style>
 </head>
@@ -731,9 +912,6 @@
       <symbol id="svg-notes" viewBox="0 0 20 20">
         <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a1 1 0 110 2h-3a1 1 0 01-1-1v-2a1 1 0 00-1-1H9a1 1 0 00-1 1v2a1 1 0 01-1 1H4a1 1 0 110-2V4zm2 2a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 4a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"/>
       </symbol>
-      <symbol id="svg-enter" viewBox="0 0 20 20">
-        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm.707-10.293a1 1 0 00-1.414-1.414l-3 3a1 1 0 000 1.414l3 3a1 1 0 001.414-1.414L9.414 11H13a1 1 0 100-2H9.414l1.293-1.293z" clip-rule="evenodd"/>
-      </symbol>
       
       <!-- Social Icons -->
       <symbol id="svg-whatsapp" viewBox="0 0 24 24">
@@ -763,7 +941,7 @@
     <div class="nav-inner">
       <!-- Brand Logo acts as HOME -->
       <div class="brand" data-nav="index">
-          <div class="logo"><svg class="icon"><use xlink:href="#svg-scooter" /></svg></div>We Deliver
+          <div class="logo"><svg class="icon"><use xlink:href="#svg-scooter" /></svg></div>SheshaDeliveries
       </div>
       
       <!-- Timer -->
@@ -782,119 +960,117 @@
 
   <!-- HERO / INDEX -->
   <header id="view-index" class="container hero">
-    <div class="grid">
-      <!-- LEFT COLUMN (Mobile: Primary Content) -->
-      <div>
+    
+    <!-- 1. WIDE HERO SECTION (BRAND + SLIDESHOW) -->
+    <div class="hero-main-card">
+      <div class="hero-brand-card">
         <div class="hero-brand">
           <div class="hero-logo"><svg class="icon"><use xlink:href="#svg-scooter" /></svg></div>
-          <h1 class="hero-title">We Deliver</h1>
+          <h1 class="hero-title">SheshaDeliveries</h1>
         </div>
-        
-        <!-- Mobile Timer (Visible only on mobile homepage) -->
-        <div class="mobile-timer">
-            <div class="time" id="mobile-date-time">Loading...</div>
-            <div class="countdown" id="mobile-countdown">Checking hours...</div>
-        </div>
+        <p class="muted" style="margin-top: 8px; font-size: 1.1rem; line-height: 1.5;">
+          Your favorite local stores, delivered fast.
+        </p>
+      </div>
 
-        <!-- Real scooter slideshow + coal background -->
-        <div class="hero-bg" style="margin-top: 12px;">
-          <div class="ride-photos" aria-label="Real delivery scooters in action">
-            <img src="https://placehold.co/1600x900/0B0E10/D4AF37?text=We+exist+for+your+hunger.+We're+not+proud+of+it." alt="Delivery rider on scooter" />
-            <img src="https://placehold.co/1600x900/111418/D4AF37?text=Your+food+is+cold.+Blame+us." alt="Courier riding through the city" />
-            <img src="https://placehold.co/1600x900/0B0E10/D4AF37?text=Fast+enough+to+make+you+think+we+care." alt="Food delivery motorbike" />
-            <img src="https://placehold.co/1600x900/111418/D4AF37?text=Reliable.+Until+we're+not." alt="Delivery rider at night" />
-            <div class="sticker">WE DELIVER</div>
-          </div>
-        </div>
-        
-        <!-- Zone selection (single method) -->
-        <div class="zone-panel">
-          <div class="caption-title">Choose your area</div>
-          <div class="zones" id="quick-zones">
-            <div class="pill" data-zone="Kwaguqa" role="button" tabindex="0" aria-pressed="false">Kwaguqa</div>
-            <div class="pill" data-zone="Ackerville" role="button" tabindex="0" aria-pressed="false">Ackerville</div>
-            <div class="pill" data-zone="Lynnville" role="button" tabindex="0" aria-pressed="false">Lynnville</div>
-            <div class="pill" data-zone="Thusanang" role="button" tabindex="0" aria-pressed="false">Thusanang</div>
-            <div class="pill" data-zone="Clewer" role="button" tabindex="0" aria-pressed="false">Clewer</div>
-            <div class="pill" data-zone="Overline" role="button" tabindex="0" aria-pressed="false">Overline</div>
-          </div>
-          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:6px;justify-content:center">
-            <button class="button primary" data-nav="restaurants" id="hero-start">Start ordering</button>
-            <button class="button" data-nav="restaurants" id="hero-browse-rest">Browse restaurants</button>
-          </div>
-        </div>
-
-        <!-- Popular nearby shortcuts -->
-        <div class="card" style="margin-top:12px">
-          <div class="qtitle" style="font-weight:900">Popular nearby</div>
-          <!-- FIX: Changed from flex to a responsive grid to prevent squashing/bad wrapping -->
-          <div class="quick-row" id="quick-popular" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap:10px; padding-top:8px">
-            <!-- Dynamic content loaded here -->
-          </div>
-        </div>
+      <!-- Mobile Timer (Visible only on mobile homepage) -->
+      <div class="mobile-timer">
+          <div class="time" id="mobile-date-time">Loading...</div>
+          <div class="countdown" id="mobile-countdown">Checking hours...</div>
       </div>
       
-      <!-- RIGHT COLUMN (Desktop only) -->
-      <div class="hero-right-column">
-        <!-- Operating Message -->
-        <div class="operating-message" id="operating-message">
-          <h3>We're here for your deliveries!</h3>
-          <p id="delivery-status">We are open for deliveries and orders during working hours and off-hours.</p>
-          <div class="contact-info">
-            <p><strong>Trading Hours:</strong></p>
-            <p>Monday - Friday: 8:00 AM - 8:00 PM</p>
-            <p>Saturday - Sunday: 9:00 AM - 7:00 PM</p>
-            <p><strong>Contact Us:</strong></p>
-            <!-- Social Media Buttons -->
-            <div class="social-buttons">
-              <a href="tel:+27794573805" class="social-btn call" aria-label="Call us">
-                <svg class="icon"><use xlink:href="#svg-phone" /></svg>
-              </a>
-              <a href="https://wa.me/27794573805" target="_blank" class="social-btn wa" aria-label="WhatsApp us">
-                <svg class="icon"><use xlink:href="#svg-whatsapp" /></svg>
-              </a>
-              <a href="#" class="social-btn fb" aria-label="Facebook">
-                <svg class="icon"><use xlink:href="#svg-facebook" /></svg>
-              </a>
-              <a href="#" class="social-btn ig" aria-label="Instagram">
-                <svg class="icon"><use xlink:href="#svg-instagram" /></svg>
-              </a>
-              <a href="#" class="social-btn tk" aria-label="TikTok">
-                <svg class="icon"><use xlink:href="#svg-tiktok" /></svg>
-              </a>
-              <a href="#" class="social-btn x" aria-label="X (Twitter)">
-                <svg class="icon"><use xlink:href="#svg-x" /></svg>
-              </a>
-            </div>
-          </div>
-        </div>
-
-        <!-- Services grid -->
-        <div class="hero-card">
-          <div class="hero-services" aria-label="Our services">
-            <div class="svc"><div class="s-ico"><svg class="icon icon-fill"><use xlink:href="#svg-burger" /></svg></div><div class="s-name">Food</div><div class="s-desc">Restaurants & takeaways</div></div>
-            <div class="svc"><div class="s-ico"><svg class="icon icon-fill"><use xlink:href="#svg-grocery" /></svg></div><div class="s-name">Groceries</div><div class="s-desc">Quick household runs</div></div>
-            <div class="svc"><div class="s-ico"><svg class="icon icon-fill"><use xlink:href="#svg-bottle" /></svg></div><div class="s-name">Liquor</div><div class="s-desc">Local bottle stores</div></div>
-            <div class="svc"><div class="s-ico"><svg class="icon icon-fill"><use xlink:href="#svg-medicine" /></svg></div><div class="s-name">Medicine</div><div class="s-desc">Pharmacy pick‑ups</div></div>
-            <div class="svc" style="grid-column: 1 / -1;"><div class="s-ico"><svg class="icon icon-fill"><use xlink:href="#svg-scooter" /></svg></div><div class="s-name">Parcels</div><div class="s-desc">Kasi‑to‑kasi courier</div></div>
-          </div>
-        </div>
-        
-        <!-- Admin Demo Panel -->
-        <div class="admin-panel">
-            <div class="title">Admin Demo Panel</div>
-            <div class="btn-group">
-                <div id="admin-open-btn-wrapper"><button class="button" id="admin-force-open">Force Open</button></div>
-                <div id="admin-close-btn-wrapper"><button class="button danger" id="admin-force-close">Force Close</button></div>
-            </div>
-            <div class="muted small" style="text-align: center;">Target WhatsApp: <strong id="current-wa-number"></strong></div>
-            <div class="field">
-                <input type="tel" id="admin-wa-input" placeholder="0791234567 (10 digits)" pattern="^0\d{9}$" title="SA numbers start with 0 and have 10 digits"/>
-                <button class="button" id="admin-set-wa">Set Number</button>
-            </div>
+      <div class="hero-bg">
+        <div class="ride-photos" aria-label="Real delivery scooters in action">
+          <!-- HIGH QUALITY, SPECIFIC IMAGES -->
+          <img src="https://images.unsplash.com/photo-1571407970349-bc81e7e96d47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800" alt="Delicious pizza" />
+          <img src="https://images.unsplash.com/photo-1627907228175-2bf846a303b4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800" alt="Juicy burger" />
+          <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800" alt="Pizza on a table" />
+          <img src="https://images.unsplash.com/photo-1588315029481-8014433e337c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800" alt="Delivery bag" />
+          <div class="sticker">SHESHA</div>
         </div>
       </div>
     </div>
+
+    <!-- 2. WIDE CTA (ZONE PANEL) -->
+    <div class="zone-panel">
+      <div class="caption-title">1. Choose your area</div>
+      <div class="zones" id="quick-zones">
+        <div class="pill" data-zone="Ermelo CBD" role="button" tabindex="0" aria-pressed="false">Ermelo CBD</div>
+        <div class="pill" data-zone="Wesselton" role="button" tabindex="0" aria-pressed="false">Wesselton</div>
+        <div class="pill" data-zone="Thusiville" role="button" tabindex="0" aria-pressed="false">Thusiville</div>
+        <div class="pill" data-zone="Cassim Park" role="button" tabindex="0" aria-pressed="false">Cassim Park</div>
+        <div class="pill" data-zone="De Bruin Park" role="button" tabindex="0" aria-pressed="false">De Bruin Park</div>
+        <div class="pill" data-zone="Nederhorst" role="button" tabindex="0" aria-pressed="false">Nederhorst</div>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:6px;justify-content:center">
+        <button class="button primary" data-nav="restaurants" id="hero-start">Start ordering</button>
+        <button class="button" data-nav="restaurants" id="hero-browse-rest">Browse stores</button>
+      </div>
+    </div>
+
+    <!-- 3. NEW 3-COLUMN INFO GRID (DESKTOP) -->
+    <div class="info-grid">
+      
+      <!-- Column 1: Operating Message -->
+      <div class="operating-message" id="operating-message">
+        <h3>We're ready for your order!</h3>
+        <p id="delivery-status">We are open for deliveries. Place your order now and we'll get it to you fast.</p>
+        <div class="contact-info">
+          <p><strong>Trading Hours:</strong></p>
+          <p>Mon - Fri: 8:00 AM - 8:00 PM</p>
+          <p>Sat - Sun: 9:00 AM - 7:00 PM</p>
+          <p><strong>Contact Us:</strong></p>
+          <div class="social-buttons">
+            <a href="tel:+27615938316" class="social-btn call" aria-label="Call us">
+              <svg class="icon"><use xlink:href="#svg-phone" /></svg>
+            </a>
+            <a href="https://wa.me/27615938316" target="_blank" class="social-btn wa" aria-label="WhatsApp us">
+              <svg class="icon"><use xlink:href="#svg-whatsapp" /></svg>
+            </a>
+            <a href="#" class="social-btn fb" aria-label="Facebook">
+              <svg class="icon"><use xlink:href="#svg-facebook" /></svg>
+            </a>
+            <a href="#" class="social-btn ig" aria-label="Instagram">
+              <svg class="icon"><use xlink:href="#svg-instagram" /></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Column 2: Popular Nearby -->
+      <div class="card card-popular">
+        <div class="qtitle" style="font-weight:900">2. Popular Nearby</div>
+        <!-- Use simple row display for popular items -->
+        <div class="quick-grid" id="quick-popular">
+          <!-- Dynamic content loaded here -->
+        </div>
+      </div>
+      
+      <!-- Column 3: Services -->
+      <div class="hero-card">
+        <div class="hero-services" aria-label="Our services">
+          <div class="svc"><div class="s-ico"><svg class="icon icon-fill"><use xlink:href="#svg-burger" /></svg></div><div class="s-name">Food</div><div class="s-desc">Restaurants</div></div>
+          <div class="svc"><div class="s-ico"><svg class="icon icon-fill"><use xlink:href="#svg-grocery" /></svg></div><div class="s-name">Groceries</div><div class="s-desc">Quick runs</div></div>
+          <div class="svc"><div class="s-ico"><svg class="icon icon-fill"><use xlink:href="#svg-bottle" /></svg></div><div class="s-name">Liquor</div><div class="s-desc">Bottle stores</div></div>
+          <div class="svc"><div class="s-ico"><svg class="icon icon-fill"><use xlink:href="#svg-medicine" /></svg></div><div class="s-name">Medicine</div><div class="s-desc">Pharmacy</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. ADMIN PANEL (full width) -->
+    <div class="admin-panel">
+        <div class="title">Admin Demo Panel</div>
+        <div class="btn-group">
+            <div id="admin-open-btn-wrapper"><button class="button" id="admin-force-open">Force Open</button></div>
+            <div id="admin-close-btn-wrapper"><button class="button danger" id="admin-force-close">Force Close</button></div>
+        </div>
+        <div class="muted small" style="text-align: center;">Target WhatsApp: <strong id="current-wa-number"></strong></div>
+        <div class="field">
+            <input type="tel" id="admin-wa-input" placeholder="0791234567 (10 digits)" pattern="^0\d{9}$" title="SA numbers start with 0 and have 10 digits"/>
+            <button class="button" id="admin-set-wa">Set</button>
+        </div>
+    </div>
+
   </header>
 
   <!-- RESTAURANTS -->
@@ -902,16 +1078,15 @@
     <div class="card" style="margin-bottom:14px;display:flex;align-items:end;justify-content:space-between;gap:12px;flex-wrap:wrap">
       <div>
         <div class="muted">DELIVERING TO</div>
-        <h2 id="zone-label">Your Zone</h2>
+        <h2 id="zone-label" style="font-family: var(--font-heading); color: var(--ink);">Your Zone</h2>
       </div>
       <button class="button" data-nav="index" id="change-area">Change area</button>
     </div>
     <div class="field search-field" style="margin-bottom:12px;">
       <div><svg class="icon"><use xlink:href="#svg-search" /></svg></div>
-      <input id="rest-search" type="text" placeholder="Search restaurants..." aria-label="Search restaurants" />
-      <div><svg class="icon"><use xlink:href="#svg-enter" /></svg></div>
+      <input id="rest-search" type="text" placeholder="Search stores..." aria-label="Search restaurants" />
     </div>
-    <div id="restaurant-list" class="grid-auto">
+    <div id="restaurant-list" class="restaurant-grid">
         <!-- Dynamic content loaded here -->
     </div>
     
@@ -930,32 +1105,30 @@
   <section id="view-menu" class="container section" style="display:none">
     <div class="menu-banner" id="menu-banner"></div>
     <div class="card" style="margin-top:12px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
-      <h2 id="menu-title">Restaurant</h2>
-      <!-- FIX: Added flex-wrap: wrap to this container -->
+      <h2 id="menu-title" style="font-family: var(--font-heading); color: var(--ink);">Restaurant</h2>
       <div style="display:flex;gap:12px;align-items:center;flex:1;justify-content:flex-end; flex-wrap: wrap;">
         <div class="field search-field" style="max-width:320px;">
           <div><svg class="icon"><use xlink:href="#svg-search" /></svg></div>
           <input id="menu-search" type="text" placeholder="Search this menu..." aria-label="Search menu" />
-          <div><svg class="icon"><use xlink:href="#svg-enter" /></svg></div>
         </div>
         <button class="button primary" data-nav="cart" id="view-cart-btn">View Cart (0)</button>
       </div>
     </div>
     <div id="menu-list" class="menu-grid" style="margin-top:12px;"></div>
-    <div style="margin-top:12px"><button class="button" data-nav="restaurants">‹ Back</button></div>
+    <div style="margin-top:12px"><button class="button" data-nav="restaurants">‹ Back to Stores</button></div>
   </section>
 
   <!-- CART -->
   <section id="view-cart" class="container section" style="display:none">
-    <h2>Your Order</h2>
+    <h2 style="font-family: var(--font-heading); color: var(--ink);">Your Order</h2>
     <div class="cart" style="margin-top:10px">
       <div id="cart-items-container"></div>
       <div class="total"><div>Total</div><div id="cart-total-price">R0.00</div></div>
     </div>
 
     <form id="delivery-form" class="card" style="margin-top:12px">
-      <h3 style="margin-bottom:8px">Delivery Details</h3>
-      <div class="grid-auto" style="grid-template-columns:repeat(auto-fit,minmax(240px,1fr))">
+      <h3 style="margin-bottom:8px; font-family: var(--font-heading); color: var(--ink);">Delivery Details</h3>
+      <div class="grid-auto" style="grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap: 12px;">
         <div class="field"><div><svg class="icon"><use xlink:href="#svg-user" /></svg></div><input id="df-name" type="text" placeholder="Full name" required /></div>
         <div class="field"><div><svg class="icon"><use xlink:href="#svg-phone" /></svg></div><input id="df-phone" type="tel" placeholder="Phone (e.g., 0812345678)" pattern="^0\d{9}$" title="South African numbers start with 0 and have 10 digits" required /></div>
         <div class="field" style="grid-column:1/-1"><div><svg class="icon"><use xlink:href="#svg-address" /></svg></div><input id="df-address" type="text" placeholder="Delivery address" required /></div>
@@ -965,27 +1138,27 @@
 
     <div style="margin-top:12px;display:flex;gap:12px;flex-wrap:wrap">
       <button class="button whatsapp" id="place-order">Order via WhatsApp</button>
-      <button class="button" data-nav="restaurants">‹ Back</button>
+      <button class="button" data-nav="restaurants">‹ Back to Stores</button>
     </div>
   </section>
   
   <!-- ORDER SUCCESS PAGE -->
   <section id="view-success" class="container section" style="display:none; text-align: center;">
       <svg class="icon success-icon"><use xlink:href="#svg-check-circle" /></svg>
-      <h2 style="font-weight: 900;">Order Sent! (You owe us now)</h2>
-      <p class="muted" style="margin-top: 8px;">Your order has been sent to our drivers via WhatsApp. Your Order Number is <strong id="success-order-num"></strong>.</p>
+      <h2 style="font-weight: 800; font-family: var(--font-heading); color: var(--ink);">Order Sent!</h2>
+      <p class="muted" style="margin-top: 8px;">Your order has been sent to our drivers via WhatsApp. Your Order Number is <strong id="success-order-num" style="color: var(--ink);"></strong>.</p>
       
       <div class="card" style="margin-top: 20px;">
-          <h3 style="font-weight: 900; margin-bottom: 12px;">Payment Options</h3>
+          <h3 style="font-weight: 800; font-family: var(--font-heading); color: var(--ink); margin-bottom: 12px;">Payment Options</h3>
           <p class="small muted">Confirm payment with the driver or via the options below immediately to speed up delivery.</p>
           <div class="payment-options">
               <div class="payment-method">
                   <strong>EFT / Bank Transfer</strong>
-                  <span>Account: We Deliver | Bank: FNB | Acc No: 629XXXXXX | Branch: 250655</span>
+                  <span>Account: SheshaDeliveries | Bank: FNB | Acc No: 629XXXXXX | Branch: 250655</span>
               </div>
               <div class="payment-method">
                   <strong>eWallet / Cash Send</strong>
-                  <span>Send to: 079 457 3805 (Reference: Your Phone Number)</span>
+                  <span>Send to: 061 593 8316 (Reference: Your Phone Number)</span>
               </div>
               <div class="payment-method">
                   <strong>Cash on Delivery (COD)</strong>
@@ -999,8 +1172,8 @@
 
   <!-- APP FOOTER -->
   <footer class="app-footer">
-      <p>&copy; 2025 We Deliver. All rights reserved. V1.1.2</p>
-      <em class="small">Disclaimer: App humor is dark and not reflective of delivery performance. (Unless you live on the fifth floor.)</em>
+      <p>&copy; 2025 SheshaDeliveries. All rights reserved. V2.1.0-Dark</p>
+      <em class="small">Disclaimer: This is a demo app. All orders are finalised via WhatsApp.</em>
   </footer>
 
 
@@ -1008,7 +1181,7 @@
   <div id="order-modal-overlay" class="modal-overlay">
     <div class="modal-box">
       <button class="modal-close" id="order-modal-close">&times;</button>
-      <h3 style="font-weight: 900; margin-bottom: 10px;">Final Order Review</h3>
+      <h3 style="margin-bottom: 10px;">Final Order Review</h3>
       <div class="order-meta">
         <div>Order # <strong id="modal-order-num"></strong></div>
         <div id="modal-order-date"></div>
@@ -1025,7 +1198,7 @@
   <div id="toast-modal-overlay" class="modal-overlay">
     <div class="modal-box" style="text-align: center; width: 300px;">
       <button class="modal-close" id="toast-modal-close">&times;</button>
-      <h3 id="toast-title" style="font-weight: 900; margin-bottom: 8px;">Wait!</h3>
+      <h3 id="toast-title" style="margin-bottom: 8px;">Wait!</h3>
       <p id="toast-message" class="muted" style="margin-bottom: 16px;">Message here.</p>
       <button class="button primary" id="toast-okay">Okay</button>
     </div>
@@ -1041,11 +1214,7 @@
     // -----------------------------------------------------------
     
     // ❗️ UPDATE THIS: Default recipient for all WhatsApp orders (ZA 10-digit number)
-    const DEFAULT_WHATSAPP_NUMBER = '27794573805'; 
-    
-    // For local testing:
-    const DEMO_PREVIEW = true; // Set to true to show preview box instead of instantly opening WA
-    const WA_QUERY_OVERRIDE = new URLSearchParams(location.search).get('wanum');
+    const DEFAULT_WHATSAPP_NUMBER = '27615938316'; // Shesha Number
     
     // Time definitions for trading hours (24-hour format)
     const TRADING_HOURS = {
@@ -1063,12 +1232,12 @@
     let ORDER_MESSAGE_CACHE = null;
 
     // --- Local Storage Accessors ---
-    const getCart = () => { try { return JSON.parse(localStorage.getItem('weDeliverCart')) || []; } catch { return []; } };
-    const saveCart = (c) => localStorage.setItem('weDeliverCart', JSON.stringify(c));
-    const clearCart = () => localStorage.removeItem('weDeliverCart');
-    const getZone = () => localStorage.getItem('weDeliverZone');
-    const getOrderNum = () => parseInt(localStorage.getItem('weDeliverOrderNum') || '0', 10);
-    const incrementOrderNum = () => localStorage.setItem('weDeliverOrderNum', getOrderNum() + 1);
+    const getCart = () => { try { return JSON.parse(localStorage.getItem('sheshaCart')) || []; } catch { return []; } };
+    const saveCart = (c) => localStorage.setItem('sheshaCart', JSON.stringify(c));
+    const clearCart = () => localStorage.removeItem('sheshaCart');
+    const getZone = () => localStorage.getItem('sheshaZone');
+    const getOrderNum = () => parseInt(localStorage.getItem('sheshaOrderNum') || '0', 10);
+    const incrementOrderNum = () => localStorage.setItem('sheshaOrderNum', getOrderNum() + 1);
     
     // --- Admin/Number Overrides ---
     function toIntlZa(n){
@@ -1078,47 +1247,48 @@
       return n; // fallback
     }
     function getWaNumber(){
-      const custom = localStorage.getItem('weDeliver_admin_wa');
-      const raw = custom || WA_QUERY_OVERRIDE || DEFAULT_WHATSAPP_NUMBER;
+      const custom = localStorage.getItem('shesha_admin_wa');
+      const raw = custom || DEFAULT_WHATSAPP_NUMBER;
       return toIntlZa(raw);
     } 
 
     // --- Master Data (Restaurants/Menus) ---
+    // HIGH-QUALITY, SPECIFIC UNSPLASH IMAGES
     const ALL_RESTAURANTS = [
-        { id: 1, name: "Kasi Kitchen", zone: "Kwaguqa", deliveryFee: 20.00, cuisine: "African", img: 'https://placehold.co/200x150/0B0E10/F2D36B?text=Kasi+Kitchen', menu: [
-            { name: 'Pap & Wors', price: 65.00, desc: 'Homestyle favourite.' },
-            { name: 'Amasi Milk', price: 15.00, desc: 'Fresh fermented milk.' },
-            { name: 'Chicken Feet', price: 35.00, desc: 'Grilled to perfection.' },
+        { id: 1, name: "KFC Ermelo", zone: "Ermelo CBD", deliveryFee: 20.00, cuisine: "Fast Food", img: 'https://images.unsplash.com/photo-1562967914-01efa7e87832?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400', menu: [
+            { name: 'Streetwise 2', price: 59.90, desc: '2 pieces of Original Recipe chicken & small chips.' },
+            { name: 'Box Master', price: 89.90, desc: 'A fillet, hashbrown, cheese, tomato & lettuce.' },
+            { name: 'Dunked Wingbox', price: 74.90, desc: '4 Zinger Wings dunked in honey & ginger soy.' }
         ]},
-        { id: 2, name: "Savory Bites", zone: "Ackerville", deliveryFee: 15.00, cuisine: "Fast Food", img: 'https://placehold.co/200x150/0B0E10/F2D36B?text=Savory+Bites', menu: [
-            { name: 'Classic Chips', price: 25.00, desc: 'Crispy golden fries.' },
-            { name: 'Chicken Wrap', price: 60.00, desc: 'Grilled chicken with salad.' },
-            { name: 'Double Cheese Burger', price: 75.00, desc: 'Extra cheesy goodness.' }
+        { id: 2, name: "Roman's Pizza Ermelo", zone: "Ermelo CBD", deliveryFee: 20.00, cuisine: "Pizza", img: 'https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400', menu: [
+            { name: 'Large Regina', price: 110.00, desc: 'Ham & mushroom.' },
+            { name: 'Large Hawaiian', price: 115.00, desc: 'Ham & pineapple.' },
+            { name: 'Large Pepperoni', price: 120.00, desc: 'Classic pepperoni.' }
         ]},
-        { id: 3, name: "Mama's Eats", zone: "Lynnville", deliveryFee: 20.00, cuisine: "Hearty Meals", img: 'https://placehold.co/200x150/0B0E10/F2D36B?text=Mama%27s+Eats', menu: [
-            { name: 'Beef Stew', price: 79.00, desc: 'Slow-cooked, rich gravy.' },
-            { name: 'Chakalaka Side', price: 18.00, desc: 'Spicy veggie relish.' },
-            { name: 'Lamb Curry', price: 95.00, desc: 'Hot and spicy lamb curry.' }
+        { id: 3, name: "Debonairs Pizza", zone: "Ermelo CBD", deliveryFee: 20.00, cuisine: "Pizza", img: 'https://images.unsplash.com/photo-1594007654729-407eedc4be65?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400', menu: [
+            { name: 'Large Cram-Decker®', price: 179.90, desc: 'Three layers, three cheeses.' },
+            { name: 'Large Tikka Chicken', price: 139.90, desc: 'Chicken, mushroom, onion, tikka sauce.' },
+            { name: 'Small Margherita', price: 59.90, desc: 'Classic cheese and tomato.' }
         ]},
-        { id: 4, name: "Spoti's Grill", zone: "Kwaguqa", deliveryFee: 15.00, cuisine: "BBQ", img: 'https://placehold.co/200x150/0B0E10/F2D36B?text=Spoti%27s+Grill', menu: [
-            { name: 'BBQ Ribs', price: 120.00, desc: 'Half rack slow-smoked.' },
-            { name: 'Boerewors Roll', price: 40.00, desc: 'With caramelized onions.' }
+        { id: 4, name: "Steers Ermelo", zone: "Wesselton", deliveryFee: 25.00, cuisine: "Fast Food", img: 'https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400', menu: [
+            { name: 'Original King Steer Burger', price: 99.90, desc: 'Two 100g beef patties, cheese, bacon.' },
+            { name: 'Wacky Wednesday', price: 69.90, desc: 'Two 100% beef burgers. Only on Wed.' },
+            { name: 'Large Chips', price: 39.90, desc: 'Famous hand-cut chips.' }
         ]},
-        { id: 5, name: "The Shisanyama Spot", zone: "Ackerville", deliveryFee: 25.00, cuisine: "BBQ", img: 'https://placehold.co/200x150/0B0E10/F2D36B?text=Shisanyama', menu: [
-            { name: 'Full Braai Platter', price: 180.00, desc: 'For sharing (or not).' },
-            { name: 'Pap & Gravy', price: 30.00, desc: 'Simple and comforting.' }
+        { id: 5, name: "Wimpy Ermelo", zone: "Thusiville", deliveryFee: 25.00, cuisine: "Family", img: 'https://images.unsplash.com/photo-1550317138-10000687a72b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400', menu: [
+            { name: 'Full Breakfast', price: 109.90, desc: 'Eggs, bacon, boerewors, chips, toast.' },
+            { name: 'Wimpy Burger & Chips', price: 89.90, desc: 'The classic 100g beef burger.' },
+            { name: 'Wimpy Coffee', price: 29.90, desc: 'A classic filter coffee.' }
         ]},
-        { id: 6, name: "Lynnville Liquids", zone: "Lynnville", deliveryFee: 30.00, cuisine: "Liquor", img: 'https://placehold.co/200x150/0B0E10/F2D36B?text=Liquor', menu: [
-            { name: 'Case of Cold Beer', price: 250.00, desc: '24 x 330ml bottles.' },
-            { name: 'Bottle of Gin', price: 320.00, desc: 'Local craft gin.' }
+        { id: 6, name: "Pick n Pay", zone: "Cassim Park", deliveryFee: 30.00, cuisine: "Groceries", img: 'https://images.unsplash.com/photo-1588964893710-441443b813c3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400', menu: [
+            { name: '2L Milk', price: 30.00, desc: 'Full cream or low fat.' },
+            { name: 'Loaf of Bread', price: 20.00, desc: 'White or brown.' },
+            { name: '1kg Sugar', price: 40.00, desc: 'White sugar.' }
         ]},
-        { id: 7, name: "Quick Groceries", zone: "Thusanang", deliveryFee: 10.00, cuisine: "Groceries", img: 'https://placehold.co/200x150/0B0E10/F2D36B?text=Groceries', menu: [
-            { name: 'Milk & Bread Combo', price: 45.00, desc: 'Emergency essentials.' },
-            { name: 'Snack Pack', price: 70.00, desc: 'Chips, sweets, and a drink.' }
-        ]},
-        { id: 8, name: "Phola Pharmacy", zone: "Thusanang", deliveryFee: 15.00, cuisine: "Medicine", img: 'https://placehold.co/200x150/0B0E10/F2D36B?text=Pharmacy', menu: [
-            { name: 'Headache Tablets', price: 50.00, desc: '12-pack, strong relief.' },
-            { name: 'Cough Syrup', price: 85.00, desc: 'The good stuff.' }
+        { id: 7, name: "Clicks Pharmacy", zone: "De Bruin Park", deliveryFee: 30.00, cuisine: "Medicine", img: 'https://images.unsplash.com/photo-1576602976047-174d58a28603?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400', menu: [
+            { name: 'Headache Tablets (24)', price: 50.00, desc: 'Paracetamol or Ibuprofen.' },
+            { name: 'Cough Syrup', price: 85.00, desc: 'For wet or dry cough.' },
+            { name: 'Vitamin C', price: 99.90, desc: '1000mg effervescent tablets.' }
         ]}
     ];
 
@@ -1132,13 +1302,11 @@
         let currentDay = now.getDay(); // 0 (Sun) to 6 (Sat)
         let nowMinutes = now.getHours() * 60 + now.getMinutes();
 
-        // Convert target hours to minutes
         const startMinutes = startHour * 60;
         const endMinutes = endHour * 60;
 
         // 1. Check if currently within hours for today
         if (nowMinutes >= startMinutes && nowMinutes < endMinutes) {
-            // Store is open. Countdown is to closing time.
             const closeTime = new Date(now);
             closeTime.setHours(endHour, 0, 0, 0);
             return { isOpen: true, time: closeTime, status: 'Closes in' };
@@ -1146,7 +1314,7 @@
 
         // 2. Determine next opening time
         let nextOpen = new Date(now);
-        nextOpen.setSeconds(0, 0); // Reset seconds and ms
+        nextOpen.setSeconds(0, 0);
         let foundNextOpen = false;
 
         // Case A: Today's hours are missed (already past closing time)
@@ -1154,7 +1322,6 @@
             nextOpen.setDate(now.getDate() + 1); // Check tomorrow
             currentDay = nextOpen.getDay();
             
-            // Set time to tomorrow's start
             if (currentDay >= 1 && currentDay <= 5) { // Weekday
                 nextOpen.setHours(TRADING_HOURS.WEEKDAY_START, 0, 0, 0);
             } else { // Weekend
@@ -1165,26 +1332,9 @@
         } 
         // Case B: Before today's opening time
         else if (nowMinutes < startMinutes) {
-            // Set time to today's start
             nextOpen.setHours(startHour, 0, 0, 0);
             foundNextOpen = true;
         }
-
-        // Fallback: Check future days until next open time is found
-        while (!foundNextOpen) {
-            nextOpen.setDate(nextOpen.getDate() + 1);
-            currentDay = nextOpen.getDay();
-
-            if (currentDay >= 1 && currentDay <= 5) { // Weekday
-                nextOpen.setHours(TRADING_HOURS.WEEKDAY_START, 0, 0, 0);
-                foundNextOpen = true;
-            } else if (currentDay === 0 || currentDay === 6) { // Weekend
-                 nextOpen.setHours(TRADING_HOURS.WEEKEND_START, 0, 0, 0);
-                foundNextOpen = true;
-            }
-            // Note: If no hours are defined for a day, it skips that day.
-        }
-
 
         return { isOpen: false, time: nextOpen, status: 'Opens in' };
     }
@@ -1194,10 +1344,8 @@
         const hours = Math.floor(totalSeconds / 3600);
         const minutes = Math.floor((totalSeconds % 3600) / 60);
         const seconds = totalSeconds % 60;
-
         const pad = (n) => String(n).padStart(2, '0');
         
-        // Return in HH:MM:SS format
         if (hours > 24) return 'Over 24h';
         return `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
     }
@@ -1207,7 +1355,6 @@
         const day = now.getDay();
         const isWeekday = day >= 1 && day <= 5;
 
-        // Determine current trading window
         const start = isWeekday ? TRADING_HOURS.WEEKDAY_START : TRADING_HOURS.WEEKEND_START;
         const end = isWeekday ? TRADING_HOURS.WEEKDAY_END : TRADING_HOURS.WEEKEND_END;
 
@@ -1219,7 +1366,7 @@
         let countdownValue = formatTimeDifference(countdownMs);
 
         // --- ADMIN OVERRIDE ---
-        const override = localStorage.getItem('weDeliver_admin_status');
+        const override = localStorage.getItem('shesha_admin_status');
         if (override === 'OPEN') {
             isOpen = true;
             countdownText = 'Closing Soon';
@@ -1233,38 +1380,25 @@
         
         IS_OPEN = isOpen;
 
-        // 1. Update Date/Time and Countdown in ALL locations
+        // 1. Update Date/Time and Countdown
         const formattedTime = now.toLocaleTimeString('en-ZA', { hour: '2-digit', minute: '2-digit' });
         const formattedDate = now.toLocaleDateString('en-ZA', { weekday: 'short', month: 'short', day: 'numeric' });
 
-        // Desktop
-        const navTime = $('#nav-date-time');
-        const navCountdown = $('#nav-countdown');
-        if (navTime) navTime.textContent = `${formattedTime} - ${formattedDate}`;
-        if (navCountdown) {
-            navCountdown.textContent = `${countdownText}: ${countdownValue}`;
-            navCountdown.classList.toggle('open', isOpen);
-            navCountdown.classList.toggle('closed', !isOpen);
-        }
+        $$('#nav-date-time, #mobile-date-time').forEach(el => el.textContent = `${formattedTime} - ${formattedDate}`);
+        $$('#nav-countdown, #mobile-countdown').forEach(el => {
+            el.textContent = `${countdownText}: ${countdownValue}`;
+            el.classList.toggle('open', isOpen);
+            el.classList.toggle('closed', !isOpen);
+        });
 
-        // Mobile
-        const mobileTime = $('#mobile-date-time');
-        const mobileCountdown = $('#mobile-countdown');
-        if (mobileTime) mobileTime.textContent = `${formattedTime} - ${formattedDate}`;
-        if (mobileCountdown) {
-            mobileCountdown.textContent = `${countdownText}: ${countdownValue}`;
-            mobileCountdown.classList.toggle('open', isOpen);
-            mobileCountdown.classList.toggle('closed', !isOpen);
-        }
-
-        // 2. Update Operating Message and Button Status
+        // 2. Update Operating Message
         let title, message;
         if (IS_OPEN) {
-            title = "We're fired up!";
-            message = "Go on, your hunger deserves this. We're open and waiting for your order.";
+            title = "We're open!";
+            message = "We are open for deliveries. Place your order now and we'll get it to you fast.";
         } else {
-            title = "Ooooh, tough luck.";
-            message = "We're currently recharging. We'll deliver tomorrow, right after our coffee.";
+            title = "We're currently closed.";
+            message = "We're not taking orders right now, but you can browse for later.";
         }
         
         const statusElement = $('#delivery-status');
@@ -1272,7 +1406,7 @@
         if (messageHeader) messageHeader.textContent = title;
         if (statusElement) statusElement.textContent = message;
 
-        // 3. Enable/Disable Buttons & Cards (Critical Check)
+        // 3. Enable/Disable Buttons
         const buttonsToDisable = [
             '#hero-start', 
             '#hero-browse-rest',
@@ -1287,41 +1421,35 @@
             }
         });
         
-        $$('.rcard, .rest').forEach(card => card.classList.toggle('disabled', !IS_OPEN));
+        $$('.rest-card, .menu-item button, .rest-row').forEach(card => card.classList.toggle('disabled', !IS_OPEN));
         
-        // Mobile Nav Links
         $$('.nav-mobile .n-link').forEach(link => {
-            if (link.dataset.nav !== 'index') { // Don't disable the home button
+            if (link.dataset.nav !== 'index') {
                 link.classList.toggle('disabled', !IS_OPEN);
             }
         });
         
-        // Admin Button Display Logic
-        const adminOverride = localStorage.getItem('weDeliver_admin_status');
+        // 4. Admin Button Display Logic
+        const adminOverride = localStorage.getItem('shesha_admin_status');
         const openWrapper = $('#admin-open-btn-wrapper');
         const closeWrapper = $('#admin-close-btn-wrapper');
 
         if (openWrapper && closeWrapper) {
+            let showOpen, showClose;
             if (adminOverride === 'OPEN') {
-                openWrapper.style.display = 'none';
-                closeWrapper.style.display = 'block';
-                document.documentElement.style.setProperty('--admin-open-display', 'none');
-                document.documentElement.style.setProperty('--admin-close-display', 'block');
+                showOpen = 'none'; showClose = 'block';
             } else if (adminOverride === 'CLOSED') {
-                openWrapper.style.display = 'block';
-                closeWrapper.style.display = 'none';
-                document.documentElement.style.setProperty('--admin-open-display', 'block');
-                document.documentElement.style.setProperty('--admin-close-display', 'none');
+                showOpen = 'block'; showClose = 'none';
             } else {
-                // Default display based on clock time
-                openWrapper.style.display = IS_OPEN ? 'none' : 'block';
-                closeWrapper.style.display = IS_OPEN ? 'block' : 'none';
-                document.documentElement.style.setProperty('--admin-open-display', IS_OPEN ? 'none' : 'block');
-                document.documentElement.style.setProperty('--admin-close-display', IS_OPEN ? 'block' : 'none');
+                showOpen = IS_OPEN ? 'none' : 'block';
+                showClose = IS_OPEN ? 'block' : 'none';
             }
+            openWrapper.style.display = showOpen;
+            closeWrapper.style.display = showClose;
+            document.documentElement.style.setProperty('--admin-open-display', showOpen);
+            document.documentElement.style.setProperty('--admin-close-display', showClose);
         }
         
-        // Update admin WA number display
         $('#current-wa-number').textContent = getWaNumber();
     }
 
@@ -1329,19 +1457,10 @@
     // ===== VIEW LOGIC & NAVIGATION =====
     // -----------------------------------------------------------
     
-    // FIX: Function definition moved up to prevent ReferenceError
     function updateCartCount(){
       const count=getCart().reduce((n,i)=>n+i.qty,0);
+      $$('#nav-cart-btn, #view-cart-btn').forEach(btn => btn.textContent = `Cart (${count})`);
       
-      // Desktop Nav Button
-      const nbtn=$('#nav-cart-btn'); 
-      if(nbtn) nbtn.textContent = `Cart (${count})`;
-      
-      // Menu View Button
-      const btn=$('#view-cart-btn'); 
-      if(btn) btn.textContent = `View Cart (${count})`;
-      
-      // Mobile Nav Badge
       const badge = $('#mobile-cart-badge');
       if (badge) {
         badge.textContent = count;
@@ -1359,12 +1478,10 @@
         title.textContent = toastTitle;
         message.textContent = toastMessage;
         
-        // Show validation modal (stays open until dismissed)
         if (isValidation) {
             toastModal.style.display = 'flex';
             okayButton.onclick = () => { toastModal.style.display = 'none'; };
         } 
-        // Show small confirmation toast (auto-hide)
         else {
             const confirmationToast = $('#item-added-toast');
             confirmationToast.textContent = toastMessage;
@@ -1376,22 +1493,17 @@
     }
     
     function show(id){
-      // Hide all views
       ['index','restaurants','menu','cart','success'].forEach(v=> $('#view-'+v).style.display = 'none');
-      // Show the target view
       const view = $('#view-'+id);
       if (view) view.style.display = 'block';
 
-      // Update active state for mobile nav
       $$('.nav-mobile .n-link').forEach(n => {
         n.classList.toggle('active', n.dataset.nav === id);
       });
 
-      // Run view-specific logic
       if(id==='restaurants') initRestaurants();
       if(id==='cart') renderCart();
       
-      // Scroll to top
       window.scrollTo(0, 0);
     }
     
@@ -1404,17 +1516,15 @@
           x.classList.toggle('active', isActive);
           x.setAttribute('aria-pressed', isActive ? 'true' : 'false');
         });
-        // Rerender popular list if zone is stored
         renderPopularRestaurants(stored);
       } else {
-         // Clear active state and popular restaurants if no zone is stored
         $$('#quick-zones .pill').forEach(x=>{ x.classList.remove('active'); x.setAttribute('aria-pressed', 'false'); });
         $('#quick-popular').innerHTML = '<div class="muted small" style="text-align:center; padding: 20px;">Select a zone above to see popular restaurants.</div>';
       }
 
       $$('#quick-zones .pill').forEach(p=>{
         const select = ()=>{
-          localStorage.setItem('weDeliverZone', p.dataset.zone);
+          localStorage.setItem('sheshaZone', p.dataset.zone);
           $$('#quick-zones .pill').forEach(x=>{ x.classList.remove('active'); x.setAttribute('aria-pressed','false'); });
           p.classList.add('active'); p.setAttribute('aria-pressed','true');
           renderPopularRestaurants(p.dataset.zone);
@@ -1422,9 +1532,6 @@
         p.addEventListener('click', select);
         p.addEventListener('keydown', (e)=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); select(); }});
       });
-      
-      // Popular quick shortcuts
-      // Event delegation handles this dynamically after renderPopularRestaurants runs
     }
     
     function renderPopularRestaurants(zone) {
@@ -1437,18 +1544,19 @@
             return;
         }
 
+        // Use new ROW style for popular
         zoneRestaurants.slice(0, 3).forEach(r => {
             const isDisabled = !IS_OPEN;
             const rcard = document.createElement('div');
-            rcard.className = `rcard ${isDisabled ? 'disabled' : ''}`;
+            rcard.className = `rest-row ${isDisabled ? 'disabled' : ''}`;
             rcard.setAttribute('data-restaurant', r.name);
             rcard.setAttribute('tabindex', isDisabled ? '-1' : '0');
             rcard.setAttribute('role', 'button');
             rcard.innerHTML = `
                 <div class="ph" style="background-image:url('${r.img}')"></div>
                 <div>
-                    <h4>${r.name}</h4>
-                    <div class="small">${r.cuisine} • R${r.deliveryFee.toFixed(2)} Fee</div>
+                    <h3>${r.name}</h3>
+                    <div class="details">${r.cuisine} • R${r.deliveryFee.toFixed(2)} Fee</div>
                 </div>
             `;
             
@@ -1472,22 +1580,23 @@
       const isAnyRestOpen = zoneRestaurants.length > 0;
       
       if (!isAnyRestOpen) {
-          listContainer.innerHTML = `<div class="muted small" style="text-align:center; padding: 30px;">
-                                        No partner restaurants found in ${zone}.
+          listContainer.innerHTML = `<div class="muted small" style="text-align:center; padding: 30px; grid-column: 1 / -1;">
+                                        No partner stores found in ${zone}.
                                         <br>Try the direct WhatsApp option below.
                                      </div>`;
       } else {
+        // Use new card style
         zoneRestaurants.forEach(r => {
             const rcard = document.createElement('article');
-            rcard.className = `rest ${isClosed ? 'disabled' : ''}`;
+            rcard.className = `rest-card ${isClosed ? 'disabled' : ''}`;
             rcard.setAttribute('data-restaurant', r.name);
+            rcard.setAttribute('tabindex', '0');
             rcard.innerHTML = `
                 <div class="ph" style="background-image:url('${r.img}')"></div>
-                <div>
+                <div class="info">
                     <h3>${r.name}</h3>
-                    <div class="muted">${r.cuisine} • R${r.deliveryFee.toFixed(2)} delivery</div>
+                    <div class="details">${r.cuisine} • R${r.deliveryFee.toFixed(2)} delivery</div>
                 </div>
-                <div><svg class="icon"><use xlink:href="#svg-chevron" /></svg></div>
             `;
             
             if (!isClosed) {
@@ -1497,7 +1606,6 @@
         });
       }
       
-      // Control "Order Anything" card visibility
       const whatsappCard = $('#whatsapp-order-card');
       whatsappCard.style.display = isClosed ? 'none' : 'block';
       
@@ -1506,14 +1614,13 @@
       if(rs){ rs.value = ''; rs.oninput = ()=>{
         const q=rs.value.trim().toLowerCase();
         let resultsFound = false;
-        $$('#restaurant-list .rest').forEach(card=>{
+        $$('#restaurant-list .rest-card').forEach(card=>{
           const name=card.querySelector('h3').textContent.toLowerCase();
           const isVisible = name.includes(q);
-          card.style.display = isVisible ? 'grid' : 'none';
+          card.style.display = isVisible ? 'block' : 'none';
           if (isVisible) resultsFound = true;
         });
         
-        // Show "Order Anything" if search results are empty
         whatsappCard.style.display = (!resultsFound && q.length > 0) ? 'block' : (isClosed ? 'none' : 'block');
       }}
     }
@@ -1523,21 +1630,18 @@
       const restaurant = ALL_RESTAURANTS.find(r => r.name === name);
       if (!restaurant) return;
       
-      CURRENT_RESTAURANT_ID = restaurant.id; // Set current restaurant lock
+      CURRENT_RESTAURANT_ID = restaurant.id;
       
       $('#menu-title').textContent=name;
       const banner=$('#menu-banner');
       if(banner){ 
           banner.style.backgroundImage = `linear-gradient(135deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.4) 100%), url('${restaurant.img}')`; 
-          banner.style.backgroundSize='cover'; 
-          banner.style.backgroundPosition='center'; 
       }
 
       const list=$('#menu-list'); list.innerHTML='';
       restaurant.menu.forEach(it=>{
         const el=document.createElement('div');
         el.className='menu-item';
-        // Use JSON.stringify and data-item to safely pass data including apostrophes
         el.innerHTML=`
             <h3>${it.name}</h3>
             <div class='muted'>${it.desc}</div>
@@ -1547,7 +1651,6 @@
         list.appendChild(el);
       });
       
-      // Search functionality
       const ms=$('#menu-search');
       if(ms){ ms.value = ''; ms.oninput=()=>{
         const q=ms.value.trim().toLowerCase();
@@ -1566,19 +1669,17 @@
       if(!b) return;
       
       const itemName = b.getAttribute('data-name');
-      // FIX: Replace &apos; back to ' before parsing
       const itemData = JSON.parse(b.getAttribute('data-item').replace(/&apos;/g, "'"));
       
       const cart=getCart();
       const currentRestaurantName = ALL_RESTAURANTS.find(r => r.id === CURRENT_RESTAURANT_ID).name;
 
-      // Check for multi-restaurant order bug
       if (cart.length > 0) {
         const firstItem = cart[0];
         const firstRestaurant = ALL_RESTAURANTS.find(r => r.id === firstItem.restaurantId);
         
         if (firstItem.restaurantId !== CURRENT_RESTAURANT_ID) {
-            showToast("Slow Down, Turbo!", `You're already assembling an order from ${firstRestaurant.name}. Finish that one first, we're not a dating app for meals!`, true);
+            showToast("Multiple Stores", `Your cart has items from ${firstRestaurant.name}. Please complete or clear that order before starting a new one.`, true);
             return;
         }
       }
@@ -1599,7 +1700,7 @@
       
       saveCart(cart); 
       updateCartCount();
-      showToast("Added!", `"${itemName}" added to cart. You're welcome.`, false, 2000);
+      showToast("Added!", `"${itemName}" added to cart.`, false, 2000);
     });
 
     // --- Cart View ---
@@ -1615,10 +1716,9 @@
           return; 
       }
       
-      // Display restaurant name above items
       const restaurant = ALL_RESTAURANTS.find(r => r.id === cart[0].restaurantId);
       if (restaurant) {
-          items.innerHTML = `<h3 style="font-weight:900; margin-bottom: 10px; color: ${IS_OPEN ? 'var(--coal)' : '#b00'};">Ordering from: ${restaurant.name}</h3>`;
+          items.innerHTML = `<h3 style="font-weight:800; font-family:var(--font-heading); margin-bottom: 10px; color: ${IS_OPEN ? 'var(--ink)' : '#DC2626'};">Ordering from: ${restaurant.name}</h3>`;
       }
       
       cart.forEach(i=>{
@@ -1663,7 +1763,7 @@
     // --- WhatsApp message (preview-first) ---
     function generateWhatsApp(){
       const cart=getCart();
-      if(cart.length===0){ showToast("Empty Cart, Bro.", "Look, we're good, but we can't deliver air. Add some food first.", true); return; }
+      if(cart.length===0){ showToast("Empty Cart", "Your cart is empty. Please add items before ordering.", true); return; }
       
       const zone=getZone() || 'Zone Not Selected';
       const name=$('#df-name')?.value.trim();
@@ -1672,7 +1772,7 @@
       const notes=$('#df-notes')?.value.trim();
       
       if(!name||!phone||!address){
-        showToast("Missing Details, Pal.", "We need your name, a working number, and a place to drop the goods. Try again.", true);
+        showToast("Missing Details", "Please fill in your name, phone number, and delivery address.", true);
         if(!name) { $('#df-name').focus(); return; }
         if(!phone) { $('#df-phone').focus(); return; }
         $('#df-address').focus();
@@ -1680,11 +1780,11 @@
       }
 
       let total=0;
-      const orderNumber = `WD${String(getOrderNum() + 1).padStart(5, '0')}`;
+      const orderNumber = `SH${String(getOrderNum() + 1).padStart(5, '0')}`;
       const restaurantName = cart.length > 0 ? cart[0].restaurantName : 'N/A';
       
       const lines = [
-        `*WE DELIVER ORDER ${orderNumber}*`,
+        `*SHESHA ORDER ${orderNumber}*`,
         `*From:* ${restaurantName}`,
         `*Delivery Zone:* ${zone}`,
         '',
@@ -1697,7 +1797,16 @@
       lines.push('', '*Order Items:*');
       
       cart.forEach(i=>{ const line=i.price*i.qty; total+=line; lines.push(`- ${i.qty}x ${i.name} (R${line.toFixed(2)})`); });
-      lines.push('', `*TOTAL (excl. delivery): R${total.toFixed(2)}*`, '', 'Please confirm this order and send payment (EFT/eWallet) details.');
+      
+      // Add delivery fee
+      const restaurant = ALL_RESTAURANTS.find(r => r.id === cart[0].restaurantId);
+      const deliveryFee = restaurant ? restaurant.deliveryFee : 0;
+      const finalTotal = total + deliveryFee;
+
+      lines.push('', `*Subtotal: R${total.toFixed(2)}*`);
+      lines.push(`*Delivery Fee: R${deliveryFee.toFixed(2)}*`);
+      lines.push(`*TOTAL: R${finalTotal.toFixed(2)}*`);
+      lines.push('', 'Please confirm this order and send payment (EFT/eWallet) details.');
       
       const msg = lines.join('\n');
       ORDER_MESSAGE_CACHE = { msg, orderNumber };
@@ -1709,7 +1818,6 @@
       $('#modal-order-content').textContent = msg;
       modal.style.display = 'flex';
       
-      // Bind modal actions
       $('#modal-send-wa').onclick = handleOrderConfirm;
       $('#modal-cancel').onclick = () => { modal.style.display = 'none'; };
     }
@@ -1721,35 +1829,30 @@
         const waNumber = getWaNumber();
         const link = `https://wa.me/${waNumber}?text=${encodeURIComponent(msg)}`;
         
-        // Open WhatsApp in a new small popup window
         window.open(link, 'whatsappPopup', 'width=600,height=700,resizable=yes,scrollbars=yes,toolbar=no,menubar=no');
 
-        // Update successful order UI
         incrementOrderNum();
         clearCart();
         updateCartCount();
         
-        // Update success page and navigate
         $('#success-order-num').textContent = orderNumber;
         show('success');
         
-        // Close modal
         $('#order-modal-overlay').style.display = 'none';
         ORDER_MESSAGE_CACHE = null;
         
-        // Optional: Show final toast confirming action
-        showToast("Sent!", `Order ${orderNumber} sent via WhatsApp. Go check the chat!`, false, 3000);
+        showToast("Sent!", `Order ${orderNumber} sent via WhatsApp.`, false, 3000);
     }
     
     // --- Order Anything (General WhatsApp) ---
     $('#order-anything-wa').addEventListener('click', ()=>{
         if (!IS_OPEN) {
-            showToast("Slow Your Roll!", "We are currently closed, you impatient human.", true);
+            showToast("We're Closed", "Sorry, we're not taking orders right now.", true);
             return;
         }
         const waNumber = getWaNumber();
         const zone = getZone() || 'Zone Not Selected';
-        const msg = `*WE DELIVER - GENERAL ORDER/QUERY*\n\n*Delivery Zone:* ${zone}\n\nI need help ordering something specific in my area.`;
+        const msg = `*SHESHA - GENERAL ORDER*\n\n*Delivery Zone:* ${zone}\n\nI need help ordering something specific in my area.`;
         const link = `https://wa.me/${waNumber}?text=${encodeURIComponent(msg)}`;
         window.open(link, 'whatsappPopup', 'width=600,height=700,resizable=yes,scrollbars=yes,toolbar=no,menubar=no');
     });
@@ -1765,16 +1868,16 @@
       const targetNav = n.dataset.nav;
       
       if (n.classList.contains('disabled')) {
-          showToast("Nah-ah-ah.", "The kitchen is closed, mate. Try again when the timer hits zero.", true);
+          showToast("We're Closed", "We are not taking orders right now. Please check back during trading hours.", true);
           return;
       }
       
       if(targetNav ==='restaurants' && !getZone()){
-        showToast("Whoa there!", "We need to know where you are first. Pick a zone!", true);
+        showToast("Select Your Zone", "Please choose your delivery area first to see available stores.", true);
         return;
       }
       if(targetNav ==='cart' && !getZone()){
-        showToast("Whoa there!", "We need to know where you are first. Pick a zone!", true);
+        showToast("Select Your Zone", "Please choose your delivery area first.", true);
         return;
       }
       show(targetNav);
@@ -1782,18 +1885,18 @@
     
     // Admin Panel Actions
     $('#admin-force-open').addEventListener('click', () => {
-        localStorage.setItem('weDeliver_admin_status', 'OPEN');
+        localStorage.setItem('shesha_admin_status', 'OPEN');
         masterTimeUpdater(); // Force refresh
     });
     $('#admin-force-close').addEventListener('click', () => {
-        localStorage.setItem('weDeliver_admin_status', 'CLOSED');
+        localStorage.setItem('shesha_admin_status', 'CLOSED');
         masterTimeUpdater(); // Force refresh
     });
     $('#admin-set-wa').addEventListener('click', () => {
         const input = $('#admin-wa-input');
         const num = input.value.trim();
         if (num.match(/^0\d{9}$/)) {
-            localStorage.setItem('weDeliver_admin_wa', num);
+            localStorage.setItem('shesha_admin_wa', num);
             input.value = '';
             showToast("Success!", `Admin WA set to: ${num}`, false, 3000);
             masterTimeUpdater(); // Update display
@@ -1812,6 +1915,9 @@
 
 
     document.addEventListener('DOMContentLoaded',()=>{ 
+      // BUG FIX: Move this function definition before it is called
+      const PLACEHOLDER_IMG = (text) => `https://placehold.co/400x300/FDBF18/FFFFFF?text=${encodeURIComponent(text)}`;
+
       // Initialize time once at start
       masterTimeUpdater(); 
       // Set interval for live updates (every 1 second)
@@ -1827,91 +1933,6 @@
       show('index');
     });
     
-    // --- TESTING FUNCTIONS --- (Moved to bottom)
-    (function tests(){
-      const q=new URLSearchParams(location.search); if(q.get('test')!=='1') return;
-      const panel=document.createElement('div'); panel.id='tpanel'; panel.style.cssText='position:fixed;right:10px;bottom:10px;background:#fff;border:1px solid #ddd;padding:8px;border-radius:8px;max-width:320px;z-index:1000;font:12px/1.2 system-ui'; panel.innerHTML='<b>Dev Tests</b><div id="log"></div>'; document.body.appendChild(panel);
-      const log=(ok,m)=>{const d=document.createElement('div');d.style.color=ok?'#0a0':'#b00';d.textContent=(ok?'✓ ':'✗ ')+m;document.getElementById('log').appendChild(d)};
-      
-      // Force OPEN for testing purposes
-      localStorage.setItem('weDeliver_admin_status', 'OPEN');
-      masterTimeUpdater();
-      
-      try{
-        // 1. Zone Selection Test
-        const kwaguqaPill = document.querySelector('#quick-zones .pill[data-zone="Kwaguqa"]');
-        log(document.querySelectorAll('#quick-zones .pill').length === 6, 'Zone chips count = 6');
-        kwaguqaPill && kwaguqaPill.click();
-        log(getZone() === 'Kwaguqa', 'Zone chip selection persists');
-        
-        // 2. Navigation Test
-        const startButton = document.getElementById('hero-start');
-        startButton && startButton.click();
-        log($('#view-restaurants').style.display === 'block', 'Navigate to restaurants');
-
-        // 3. Search Test
-        const rs = $('#rest-search');
-        rs.value = 'Kasi'; 
-        rs.dispatchEvent(new Event('input'));
-        const visibleCards = [...document.querySelectorAll('#restaurant-list .rest')].filter(el => getComputedStyle(el).display !== 'none').length;
-        log(visibleCards >= 1, 'Restaurant search filters');
-
-        // 4. Open Menu Test
-        const kasiKitchenCard = document.querySelector('[data-restaurant="Kasi Kitchen"]');
-        kasiKitchenCard && kasiKitchenCard.click();
-        log($('#view-menu').style.display === 'block', 'Open menu');
-
-        // 5. Cart Logic Test (Adding)
-        const addBurger = document.querySelector('#menu-list button[data-name="Pap & Wors"]');
-        addBurger && addBurger.click();
-        addBurger && addBurger.click();
-        updateCartCount();
-        log(getCart().find(i => i.name === 'Pap & Wors')?.qty === 2, 'Cart item quantity is 2');
-
-        // 6. Navigate to Cart and Check Decrement/Remove
-        show('cart');
-        renderCart();
-        const firstDec = document.querySelector('#cart-items-container [data-dec]'); 
-        firstDec && firstDec.click();
-        renderCart();
-        log(getCart().find(i => i.name === 'Pap & Wors')?.qty === 1, 'Decrement works');
-        const removeBtn = document.querySelector('#cart-items-container [data-remove]'); 
-        removeBtn && removeBtn.click();
-        renderCart();
-        log(getCart().length === 0, 'Remove works');
-
-        // 7. Order Generation Test (Requires filling form)
-        // Add item back to cart to test order generation
-        const testItem = ALL_RESTAURANTS[0].menu[0];
-        saveCart([{name: testItem.name, price: testItem.price, qty: 1, restaurantId: ALL_RESTAURANTS[0].id, restaurantName: ALL_RESTAURANTS[0].name }]);
-        show('cart');
-        
-        // Fill form fields
-        $('#df-name').value = 'Test User';
-        $('#df-phone').value = '0712345678';
-        $('#df-address').value = '123 Sample Street';
-        
-        // Trigger order generation (shows modal)
-        document.getElementById('place-order').click();
-        log($('#order-modal-overlay').style.display === 'flex', 'Order modal appears');
-        
-        // Trigger modal confirmation (sends WA, navigates to success)
-        document.getElementById('modal-send-wa').click();
-        log($('#view-success').style.display === 'block', 'Navigates to success page');
-        
-        // Check WA message content (order number is incremented and fields are present)
-        const lastOrderNum = getOrderNum();
-        log(lastOrderNum > 0, 'Order number incremented');
-        
-        // Clean up
-        clearCart();
-        localStorage.removeItem('weDeliver_admin_status');
-        
-      }catch(e){ 
-          console.error("Test failed: ", e);
-          log(false, `Runtime Error: ${e.message}`);
-      }
-    })();
   </script>
 </body>
 </html>
