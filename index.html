@@ -1,0 +1,1917 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>We Deliver — Kasi Play (Phase 1)</title>
+  
+  <style>
+    /* =====================================================
+       THEME — Smoke (grey), Coal (black), Fire (gold)
+       ===================================================== */
+    :root{
+      --smoke:#F3F4F6;      /* light grey background */
+      --paper:#FFFFFF;      /* card surfaces */
+      --coal:#0B0E10;       /* primary ink */
+      --coal-2:#161B22;     /* secondary ink */
+      --muted:#6B7280;      /* captions */
+      --gold:#D4AF37;       /* fire gold */
+      --gold-2:#F2D36B;     /* soft gold */
+      --line:rgba(11,14,16,.12);
+      --radius:18px;        /* rounded corners */
+      --shadow:0 16px 50px rgba(11,14,16,.12);
+      --shadow-sm:0 8px 24px rgba(11,14,16,.10);
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{
+      font-family:"Manrope",system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial;
+      color:var(--coal);
+      /* Background gradient restored */
+      background:
+        radial-gradient(1200px 600px at -10% -20%, rgba(212,175,55,.08), transparent 60%),
+        radial-gradient(1200px 600px at 110% 120%, rgba(15,20,25,.06), transparent 60%),
+        var(--smoke);
+      min-height:100svh;
+      overflow-x: hidden; /* Prevents horizontal scroll */
+    }
+
+    /* SVG Icon styles */
+    .icon {
+      display: inline-block;
+      width: 1em;
+      height: 1em;
+      stroke-width: 0;
+      stroke: currentColor;
+      fill: currentColor;
+      vertical-align: middle;
+    }
+    .icon-fill { fill: currentColor; stroke: none; }
+    .icon-stroke { fill: none; stroke: currentColor; stroke-width: 2px; }
+
+    /* Layout: Full width on mobile, container on desktop */
+    .container{
+      width: 100%; /* Mobile-first: full width */
+      margin-inline:auto;
+    }
+
+    /* ---------------- NAV (Desktop) ---------------- */
+    .nav{
+      display: none; /* Mobile-first: hidden */
+      position:sticky;top:0;z-index:50;
+      backdrop-filter:blur(8px) saturate(1.1);
+      background:var(--paper); /* White navbar */
+      border-bottom:1px solid var(--line);
+    }
+    .nav-inner{
+      display:grid;
+      grid-template-columns: 1fr auto 1fr; /* For centered time */
+      align-items:center;
+      justify-content:space-between;
+      padding:14px 0;
+    }
+    .brand{display:flex;align-items:center;gap:12px;font-weight:800;letter-spacing:.2px; cursor: pointer;}
+    .logo{
+      width:42px;height:42px;
+      border-radius:14px;display:grid;place-items:center;
+      background:radial-gradient(80% 80% at 30% 30%, var(--gold-2), var(--gold));
+      color:#111;box-shadow:var(--shadow-sm);
+    }
+    .logo span{font-size:22px}
+    .nav-links{display:flex;gap:12px;align-items:center; justify-content: flex-end;}
+    .link{color:var(--coal);opacity:.9;text-decoration:none;font-weight:700}
+    .button{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:12px 16px;border-radius:14px;border:1px solid var(--line);background:var(--paper);color:var(--coal);font-weight:800;cursor:pointer;transition:transform .04s ease, box-shadow .2s}
+    .button:hover{box-shadow:var(--shadow-sm)}
+    .button.primary{background:linear-gradient(135deg,var(--gold),var(--gold-2));border:0;color:#111;box-shadow:0 14px 40px rgba(212,175,55,.28)}
+    .button.whatsapp{background:linear-gradient(135deg,#25D366,#128C7E);border:0;color:#fff;box-shadow:0 14px 40px rgba(18,140,126,.35)}
+    .button.danger{background:linear-gradient(135deg,#ff7a7a,#ff3b3b);border:0;color:#fff}
+    .button:active{transform:translateY(1px)}
+    .button,.pill,.qbtn,.remove{min-height:44px}
+    .button{min-height:48px}
+    
+    /* Disabled button style */
+    .button.disabled {
+      background: var(--smoke);
+      color: var(--muted);
+      cursor: not-allowed;
+      box-shadow: none;
+      opacity: 0.7;
+      pointer-events: none;
+    }
+
+    /* Desktop Timer Styles */
+    .nav-timer {
+        text-align: center;
+        font-size: 0.85rem;
+        line-height: 1.2;
+        padding: 0 10px;
+    }
+    .nav-timer .time {
+        font-weight: 800;
+        color: var(--coal);
+    }
+    .nav-timer .countdown {
+        font-weight: 700;
+        font-size: 0.75rem;
+        color: var(--muted);
+    }
+    .nav-timer .countdown.open {
+        color: #128C7E; /* WhatsApp Green */
+    }
+    .nav-timer .countdown.closed {
+        color: #b00; /* Danger Red */
+    }
+
+
+    /* ---------------- NAV (Mobile) ---------------- */
+    .nav-mobile {
+      display: grid; /* Show on mobile */
+      grid-template-columns: 1fr 1fr 1fr;
+      position: sticky;
+      bottom: 0;
+      z-index: 50;
+      background:var(--paper); /* White navbar */
+      backdrop-filter: blur(10px) saturate(1.1);
+      border-top: 1px solid var(--line);
+      padding: 6px 10px 10px 10px; /* More padding at bottom for safe area */
+    }
+    .nav-mobile .n-link {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      font-weight: 800;
+      font-size: 0.75rem; /* 12px */
+      color: var(--muted);
+      text-decoration: none;
+      padding: 8px 4px;
+      border-radius: 12px;
+    }
+    .nav-mobile .n-link .icon {
+      font-size: 24px;
+    }
+    .nav-mobile .n-link.active {
+      color: var(--coal);
+      background: rgba(212,175,55,.15); /* Soft gold background */
+    }
+    .nav-mobile .n-link.cart-link {
+      position: relative;
+    }
+    .nav-mobile .n-link.disabled {
+      color: var(--muted);
+      pointer-events: none;
+      opacity: 0.6;
+      background: transparent;
+    }
+    /* Cart count badge */
+    .n-link .badge {
+      position: absolute;
+      top: 4px;
+      right: 18px;
+      background: var(--gold);
+      color: #111;
+      font-size: 10px;
+      font-weight: 900;
+      line-height: 1;
+      padding: 3px 5px;
+      border-radius: 99px;
+      min-width: 18px;
+      text-align: center;
+      border: 2px solid #fff;
+    }
+
+    /* ---------------- HERO ---------------- */
+    /* Mobile-first: Full width with padding */
+    .hero{
+      min-height:auto;
+      padding: 16px; /* Reduced for less scroll */
+    }
+    .hero .grid{
+      display:grid;
+      gap:22px;
+      grid-template-columns:1fr;
+    }
+
+    .hero-brand{display:flex;align-items:center;gap:12px;margin-bottom:8px}
+    .hero-logo{
+      width:72px;height:72px;
+      border-radius:18px;display:grid;place-items:center;
+      background:radial-gradient(80% 80% at 30% 30%, var(--gold-2), var(--gold));
+      color:#111;box-shadow:var(--shadow);
+    }
+    .hero-logo .icon{font-size:34px;line-height:1}
+    .hero-title{font-family:"Quicksand",Manrope,system-ui;font-weight:700;font-size:clamp(28px,5vw,52px);line-height:1.06;letter-spacing:.2px;}
+
+    /* Mobile Timer (Visible only on mobile homepage) */
+    .mobile-timer {
+        background: var(--paper);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        padding: 10px;
+        margin-top: 12px;
+        text-align: center;
+        box-shadow: var(--shadow-sm);
+        display: block;
+    }
+
+    /* Operating Message */
+    .operating-message {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 16px;
+      text-align: center;
+      box-shadow: var(--shadow-sm);
+    }
+    .operating-message h3 {
+      font-weight: 900;
+      font-size: 1.2rem;
+      margin-bottom: 8px;
+    }
+    .operating-message p {
+      color: var(--muted);
+      font-weight: 700;
+      margin-bottom: 4px;
+      line-height: 1.4;
+    }
+    .contact-info {
+      margin-top: 16px;
+      font-weight: 700;
+    }
+    .contact-info p {
+      margin-bottom: 8px;
+    }
+    .contact-info a {
+      color: var(--coal);
+      text-decoration: none;
+      font-weight: 800;
+    }
+    .contact-info a:hover {
+      text-decoration: underline;
+    }
+    
+    /* Social Media Buttons */
+    .social-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 16px;
+      flex-wrap: wrap; /* Added for safety */
+    }
+    .social-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      border-radius: 999px; /* circle */
+      background: var(--paper);
+      color: var(--coal);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow-sm);
+      text-decoration: none;
+      transition: transform .1s ease, box-shadow .1s ease;
+    }
+    .social-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow);
+    }
+    .social-btn .icon {
+      font-size: 24px;
+    }
+    .social-btn.wa { color: #25D366; }
+    .social-btn.fb { color: #1877F2; }
+    .social-btn.ig { color: #E4405F; }
+    .social-btn.tk { color: #000000; }
+    .social-btn.x { color: #000000; }
+    .social-btn.call { color: #0B0E10; }
+
+    /* Admin Demo Panel */
+    .admin-panel {
+        background: var(--paper);
+        border: 2px dashed var(--gold);
+        border-radius: var(--radius);
+        padding: 16px;
+        margin-top: 12px;
+        box-shadow: var(--shadow-sm);
+        display: grid;
+        gap: 10px;
+    }
+    .admin-panel .title {
+        font-weight: 900;
+        font-size: 1.1rem;
+        color: var(--coal);
+        text-align: center;
+    }
+    .admin-panel .field {
+        background: var(--smoke);
+        border: 1px solid var(--line);
+        padding: 8px;
+        border-radius: 10px;
+    }
+    .admin-panel .btn-group {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+
+    .ride-anim{display:none} /* replaced by ride-photos */
+    .hero-bg{background:radial-gradient(800px 320px at 20% 0%, rgba(212,175,55,.10), transparent 60%), linear-gradient(180deg,#0F1418 0%, #111418 100%);border-radius:16px;padding:8px}
+    .ride-photos{
+      position:relative;
+      border-radius:16px;
+      overflow:hidden;
+      border:1px solid var(--line);
+      box-shadow:var(--shadow-sm);
+      height:clamp(220px, 30vh, 420px); /* Reduced for less scroll */
+    }
+    .ride-photos img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;animation:fade 16s infinite ease-in-out;background:#e5e7eb;transition:opacity .3s ease}
+    .ride-photos img:nth-child(1){animation-delay:0s;opacity:1}
+    .ride-photos img:nth-child(2){animation-delay:4s}
+    .ride-photos img:nth-child(3){animation-delay:8s}
+    .ride-photos img:nth-child(4){animation-delay:12s}
+    @keyframes fade{0%,25%{opacity:1}33%,100%{opacity:0}}
+    .ride-photos .sticker{position:absolute;left:12px;bottom:12px;background:rgba(212,175,55,.95);color:#111;padding:6px 10px;border-radius:12px;font-weight:900;letter-spacing:.02em}
+    @media (prefers-reduced-motion: reduce){.ride-photos img{animation:none;opacity:1}}
+
+    .zone-panel{margin-top:12px;background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:12px;display:grid;gap:10px}
+    .caption-title{font-weight:900;font-size:18px;letter-spacing:.02em}
+    .zones{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap: 12px;align-items:flex-start}
+    @media(min-width:640px){.zones{gap:12px}}
+
+    .pill{
+      padding:12px 14px;
+      border-radius:999px;
+      background:#fff;
+      border:2px solid rgba(22,27,34,.12);
+      color:var(--coal);
+      font-weight:800;
+      text-align:center;
+      cursor:pointer;
+      transition:transform .05s ease, background .18s;
+      min-height:44px;
+    }
+    .pill:hover{transform:translateY(-2px)}
+    .pill.active,.pill:focus{background:linear-gradient(135deg,var(--gold),var(--gold-2));color:#111}
+
+    /* Services grid (replaces any photos) */
+    .hero-card{
+      position:relative;
+      border-radius:var(--radius);
+      overflow:hidden;
+      box-shadow:var(--shadow);
+      border:1px solid var(--line);
+      min-height: auto; /* Reduced for less scroll */
+      background:#fff;
+    }
+    .hero-services{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;padding:16px}
+    .svc{
+      display:grid;
+      gap:6px;
+      align-content:start;
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:16px;
+      box-shadow:var(--shadow-sm);
+      padding:12px;
+      align-items: center;
+      text-align: center;
+    }
+    .s-ico{font-size:28px;line-height:1; margin: auto; color: var(--gold);}
+    .s-name{font-weight:900}
+    .s-desc{color:var(--muted);font-weight:700;font-size:.9rem}
+
+    /* Lists & cards */
+    .section{
+      padding: 16px; /* Reduced for less scroll */
+      border-top:1px solid var(--line);
+      /* Add padding-bottom to keep content above sticky nav */
+      padding-bottom: 96px; 
+    }
+    /* Add padding to last child to clear footer */
+    .hero {
+      padding-bottom: 96px;
+    }
+    
+    .card{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:14px;box-shadow:var(--shadow-sm)}
+    .grid-auto{display:grid;grid-template-columns:1fr;gap:12px}
+
+    .rest{display:grid;grid-template-columns:92px 1fr auto;gap:12px;align-items:center;border-radius:16px;background:#fff;padding:12px;border:1px solid var(--line);box-shadow:var(--shadow-sm);cursor:pointer}
+    .rest.disabled { opacity: 0.6; pointer-events: none; }
+    .rest .ph{width:92px;aspect-ratio:4/3;border-radius:12px;background:#eee;background-size:cover;background-position:center}
+    .rest h3{font-size:1.1rem}
+    .rest > div:last-child{font-size:22px;opacity:.7}
+    .rest .icon { font-size: 20px; color: var(--muted); }
+
+    .menu-banner{height:220px;border-radius:18px;background:linear-gradient(135deg,var(--gold),var(--gold-2));border:1px solid var(--line)}
+    .menu-grid{display:grid;grid-template-columns:1fr;gap:10px}
+    @media(min-width:520px){.menu-grid{grid-template-columns:repeat(2,1fr)}}
+    @media(min-width:900px){.menu-grid{grid-template-columns:repeat(3,1fr)}}
+    .menu-item{background:#fff;border:1px solid var(--line);border-radius:16px;padding:12px;display:grid;gap:6px;box-shadow:var(--shadow-sm)}
+    .price{font-weight:900}
+
+    /* Utility text classes added */
+    .muted{color:var(--muted);font-weight:700}
+    .small{color:var(--muted);font-weight:700;font-size:.9rem}
+    .qtitle{font-weight:900}
+    /* Quick restaurant card */
+    .rcard{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:12px;
+      padding:10px;
+      box-shadow:var(--shadow-sm);
+      cursor:pointer
+    }
+    .rcard.disabled { opacity: 0.6; pointer-events: none; }
+    .rcard .ph{width:92px;height:72px;border-radius:10px;background:#eee;background-size:cover;background-position:center}
+
+    /* Cart */
+    .cart{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:12px;box-shadow:var(--shadow-sm)}
+    .row{display:grid;grid-template-columns:1fr auto auto auto;gap:12px;align-items:center;padding:10px 0;border-bottom:1px dashed var(--line)}
+    .row:last-child{border-bottom:0}
+    .qty{display:inline-grid;grid-auto-flow:column;grid-auto-columns:34px;align-items:center;justify-content:center;gap:8px}
+    .qbtn{height:34px;width:34px;border-radius:10px;border:1px solid var(--line);background:#fff;font-weight:900;cursor:pointer}
+    .remove{height:34px;width:34px;border-radius:10px;border:1px solid var(--line);background:#fff;font-weight:900;cursor:pointer; color: #b00;}
+    .total{display:flex;justify-content:space-between;align-items:center;margin-top:12px;padding-top:12px;border-top:2px solid var(--line);font-weight:900}
+
+    /* Inputs */
+    .field{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:center;background:#fff;border:1px solid var(--line);padding:12px;border-radius:14px;box-shadow:var(--shadow-sm)}
+    .field .icon { font-size: 20px; color: var(--muted); }
+    .field.search-field { grid-template-columns: auto 1fr auto; }
+    .field input,.field textarea{width:100%;background:transparent;border:0;color:var(--coal);font-weight:700;outline:0}
+    .field textarea{min-height:72px;resize:vertical}
+
+    .button:focus-visible,.link:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--gold-2);outline-offset:2px}
+
+    /* Modals/Popups */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+    .modal-box {
+      background: var(--paper);
+      border-radius: var(--radius);
+      padding: 20px;
+      max-width: 90%;
+      width: 400px;
+      box-shadow: var(--shadow);
+      position: relative;
+    }
+    .modal-close {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--muted);
+      padding: 5px;
+    }
+    .order-meta {
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 8px;
+      margin-bottom: 12px;
+      font-weight: 700;
+    }
+    .order-meta strong {
+      color: var(--coal);
+      font-weight: 900;
+    }
+    .order-content {
+      white-space: pre-wrap;
+      word-break: break-word;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.9rem;
+      margin-bottom: 16px;
+      background: var(--smoke);
+      padding: 12px;
+      border-radius: 12px;
+      color: var(--coal-2);
+    }
+    .modal-actions {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+    }
+
+    /* Toast Notification (Item Added) */
+    .toast-notification {
+        position: fixed;
+        bottom: 70px; /* Above sticky footer */
+        left: 50%;
+        transform: translateX(-50%);
+        background: var(--coal);
+        color: var(--paper);
+        padding: 12px 20px;
+        border-radius: 999px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        z-index: 900;
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out;
+        font-weight: 700;
+        font-size: 0.9rem;
+        pointer-events: none;
+    }
+    .toast-notification.show {
+        opacity: 1;
+    }
+    
+    /* Order Success Page */
+    .success-icon {
+        color: #25D366; /* WhatsApp Green */
+        font-size: 5rem;
+        margin-bottom: 16px;
+    }
+    .payment-options {
+        display: grid;
+        gap: 12px;
+        margin-top: 16px;
+    }
+    .payment-method {
+        background: var(--smoke);
+        padding: 12px;
+        border-radius: 12px;
+        font-weight: 700;
+        text-align: left;
+    }
+    .payment-method strong {
+        color: var(--coal);
+        font-weight: 900;
+    }
+    .payment-method span {
+        font-size: 0.8rem;
+        display: block;
+        color: var(--muted);
+    }
+    
+    /* App Footer */
+    .app-footer {
+        text-align: center;
+        font-size: 0.75rem;
+        color: var(--muted);
+        padding: 8px 16px 8px 16px; /* Top padding is key to separate from content */
+        margin-top: 20px; /* Separator from the main content */
+    }
+    .app-footer em {
+        display: block;
+        margin-top: 4px;
+        font-style: italic;
+    }
+
+
+    /* =======================================
+       Desktop & Tablet Media Queries
+       ======================================= */
+    @media(min-width:768px){
+      /* Show desktop nav, hide mobile nav */
+      .nav { display: block; }
+      .nav-inner { width:min(1200px,95vw); margin-inline:auto; }
+      .nav-mobile { display: none; }
+      .mobile-timer { display: none; }
+
+      /* Restore container widths */
+      .container {
+        width:min(1200px,95vw);
+      }
+
+      /* Restore layout for hero */
+      .hero{
+        min-height:82svh;
+        display:grid;
+        align-items:start; /* Set alignment back to start on desktop */
+        padding:clamp(18px,4vw,40px) 0;
+      }
+      .hero .grid{
+        display: grid;
+        grid-template-columns:1.05fr 1fr;
+      }
+      
+      /* Desktop Ordering: Left (Primary) content always first column */
+      .hero > div:first-child { order: 1; }
+      
+      /* Right column: Slideshow, Message, Services, Admin stack vertically */
+      .hero-right-column {
+          display: grid;
+          gap: 22px;
+          grid-template-rows: auto auto auto 1fr; 
+          order: 2;
+      }
+      .hero-bg { order: 1; margin-top: 0; }
+      .operating-message { order: 2; margin-top: 0; }
+      .hero-card { order: 3; margin-top: 0; }
+      .admin-panel { order: 4; margin-top: 0; }
+      
+      /* Services grid items */
+      .hero-services {
+         grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+      }
+      
+      /* Make Admin Panel buttons hide/show */
+      #admin-open-btn-wrapper { display: var(--admin-open-display, none); }
+      #admin-close-btn-wrapper { display: var(--admin-close-display, none); }
+      
+    }
+      
+    /* Responsive overrides for smaller layouts */
+    @media(max-width:767px){
+        .hero .grid {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Left Column (Brand, Zones, Popular) */
+        .hero > div:first-child { order: 1; }
+        
+        /* Right Column (Slideshow, Message, Services, Admin) */
+        .hero-right-column {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            /* ORDER 2: This entire block goes BELOW the Brand/Title */
+            order: 2;
+        }
+        
+        /* Rearrange elements WITHIN the right column for mobile flow: Slideshow, Message, Services, Admin */
+        /* Slideshow, Operating Message, Services, Admin */
+        .hero-bg { order: 1; margin-top: 12px; }
+        .operating-message { order: 2; margin-top: 12px; }
+        .hero-card { order: 3; margin-top: 0; }
+        .admin-panel { order: 4; margin-top: 12px; }
+        
+        .row{grid-template-columns:1fr auto;grid-template-areas:"name price" "qty remove"}
+        .row > div:nth-child(1){grid-area:name}
+        .row > .qty{grid-area:qty}
+        .row > div:nth-child(3){grid-area:price;justify-self:end}
+        .row > button.remove{grid-area:remove;justify-self:end}
+        .menu-grid{grid-template-columns:1fr}
+        
+        .admin-panel {
+            margin-bottom: 20px;
+        }
+        .app-footer {
+            margin-bottom: 70px;
+        }
+    }
+    @media(min-width:561px) and (max-width:1024px){
+      .menu-grid{grid-template-columns:repeat(2,1fr)}
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 
+    SVG Sprite Sheet 
+    Define all icons here once
+  -->
+  <svg width="0" height="0" style="position:absolute">
+    <defs>
+      <symbol id="svg-scooter" viewBox="0 0 24 24">
+        <path d="M19.78 11.5c-.3 0-.58.05-.85.14L17.2 8H20V6h-3.72l-1.4-4H12v2h2.2l1.1 3H12c-2.76 0-5 2.24-5 5v1.43c-1.8.76-3 2.5-3 4.57 0 2.76 2.24 5 5 5s5-2.24 5-5c0-1.8-1.03-3.36-2.5-4.24V14h2.2l1.73 3H17v2h3.28l1.1-5H22v-2h-2.22zM9 20c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm8-6h-2.67l-1.73-3H9v-2c0-1.66 1.34-3 3-3h2.33l1.8 5.4c.17-.03.33-.06.5-.08.12-.01.23-.02.35-.02 1.66 0 3 1.34 3 3s-1.34 3-3 3c-.12 0-.23-.01-.35-.02-.17-.02-.33-.05-.5-.08L17 14z"/>
+      </symbol>
+      <symbol id="svg-burger" viewBox="0 0 20 20">
+        <path d="M10 1c-4.418 0-8 2.239-8 5v3h16V6c0-2.761-3.582-5-8-5zM2 11v1.93c0 1.066.86 1.93 1.928 1.93h12.144C17.14 14.86 18 13.996 18 12.93V11H2zM4 16.028v-1.028h12v1.028A1.972 1.972 0 0114.028 18H5.972A1.972 1.972 0 014 16.028z"/>
+      </symbol>
+      <symbol id="svg-grocery" viewBox="0 0 20 20">
+        <path d="M16 6v2h2l-1.5 9H5.5L4 8h2V6a4 4 0 118 0zM8 6a2 2 0 114 0v2H8V6zM6.49 10l.8 6h5.42l.8-6H6.49z"/>
+      </symbol>
+      <symbol id="svg-bottle" viewBox="0 0 20 20">
+        <path d="M12 5V2a1 1 0 00-1-1H9a1 1 0 00-1 1v3H5a1 1 0 00-1 1v12a1 1 0 001 1h10a1 1 0 001-1V6a1 1 0 00-1-1h-3zM9 3h2v2H9V3zm6 14H5V7h10v10z"/>
+        <path d="M7 10h2v4H7z"/>
+      </symbol>
+      <symbol id="svg-medicine" viewBox="0 0 20 20">
+        <path fill-rule="evenodd" d="M9 2a1 1 0 00-1 1v1H5a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2V6a2 2 0 00-2-2h-3V3a1 1 0 00-1-1H9zM5 6h10v10H5V6zm5 1a1 1 0 011 1v2h2a1 1 0 110 2h-2v2a1 1 0 11-2 0v-2H7a1 1 0 110-2h2V8a1 1 0 011-1z" clip-rule="evenodd"/>
+      </symbol>
+      <symbol id="svg-search" viewBox="0 0 20 20">
+        <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"/>
+      </symbol>
+      <symbol id="svg-chevron" viewBox="0 0 20 20">
+        <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
+      </symbol>
+      <symbol id="svg-home" viewBox="0 0 20 20">
+        <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2.5a.5.5 0 01.5-.5h3a.5.5 0 01.5.5V17a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/>
+      </symbol>
+      <symbol id="svg-store" viewBox="0 0 20 20">
+        <path d="M2 2a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H3a1 1 0 01-1-1V2zm0 4v10a1 1 0 001 1h14a1 1 0 001-1V6H2zm3 2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 01-1 1H6a1 1 0 01-1-1V8zm7 0a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 01-1 1h-2a1 1 0 01-1-1V8z"/>
+      </symbol>
+      <symbol id="svg-cart" viewBox="0 0 20 20">
+        <path d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.92 1.056l7.23.904A1 1 0 0013.8 5.48L16 3l-1.29 2.064A.998.998 0 0014.07 6H7.79l-.35-1.405a1 1 0 00-.922-1.055L3 3.42V1zM4.328 8l1.36 5.447A1.998 1.998 0 007.618 15h4.764a2 2 0 001.93-1.553L15.67 8H4.328zM7 17a1 1 0 110 2 1 1 0 010-2zm8 0a1 1 0 110 2 1 1 0 010-2z"/>
+      </symbol>
+      <symbol id="svg-location" viewBox="0 0 20 20">
+        <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+      </symbol>
+      <symbol id="svg-menu" viewBox="0 0 20 20">
+        <path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"/>
+      </symbol>
+      <symbol id="svg-user" viewBox="0 0 20 20">
+        <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/>
+      </symbol>
+      <symbol id="svg-phone" viewBox="0 0 20 20">
+        <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.058l-1.956 1.05a11.03 11.03 0 005.456 5.456l1.05-1.956a1 1 0 011.058-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C6.477 18 2 13.523 2 7V3z"/>
+      </symbol>
+      <symbol id="svg-address" viewBox="0 0 20 20">
+        <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+      </symbol>
+      <symbol id="svg-notes" viewBox="0 0 20 20">
+        <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a1 1 0 110 2h-3a1 1 0 01-1-1v-2a1 1 0 00-1-1H9a1 1 0 00-1 1v2a1 1 0 01-1 1H4a1 1 0 110-2V4zm2 2a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 4a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"/>
+      </symbol>
+      <symbol id="svg-enter" viewBox="0 0 20 20">
+        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm.707-10.293a1 1 0 00-1.414-1.414l-3 3a1 1 0 000 1.414l3 3a1 1 0 001.414-1.414L9.414 11H13a1 1 0 100-2H9.414l1.293-1.293z" clip-rule="evenodd"/>
+      </symbol>
+      
+      <!-- Social Icons -->
+      <symbol id="svg-whatsapp" viewBox="0 0 24 24">
+        <path d="M20.5 3.4A12 12 0 0 0 12 0 12 12 0 0 0 .5 19.8l.1.1 3.5 1 1-3.4-.1-.1a12 12 0 0 1 1.4-14 12 12 0 0 1 17.1 2.9 12 12 0 0 1 2.9 17.1A12 12 0 0 1 12 24h-.1a12 12 0 0 1-8.5-3.5l-.1-.1-3.8 1.1 1.1-3.8.1-.1A12 12 0 0 1 12 0a12 12 0 0 1 8.5 3.4zM12 21.8c3.2 0 6.2-1.2 8.5-3.5a10 10 0 0 0 2.9-8.5 10 10 0 0 0-3.5-8.5 10 10 0 0 0-8.5-3.5 10 10 0 0 0-8.5 3.5 10 10 0 0 0-3.5 8.5 10 10 0 0 0 3.5 8.5l.1.1 2.7-.8-.8 2.7-.1-.1a10 10 0 0 0 8.5 3.5zm5.5-6.9c-.3-.1-1.6-.8-1.9-.9-.3-.1-.5-.1-.7.1-.2.2-.7.8-.9 1-.1.1-.3.2-.5.1-.3-.1-1.1-.4-2.1-1.3-.8-.7-1.3-1.5-1.5-1.8-.1-.3 0-.5.1-.6.1-.1.2-.3.4-.4.1-.1.2-.2.2-.4.1-.2 0-.3-.1-.4-.1-.1-.7-1.6-.9-2.2-.2-.6-.4-.5-.5-.5h-.5c-.2 0-.4 0-.6.1-.2.1-.5.2-.8.5-.2.3-.8 1-.8 2.3 0 1.4 1 2.7 1.1 2.9.1.2 1.6 2.5 4 3.5.6.2 1 .4 1.4.5.6.2 1.1.1 1.5.1.5-.1 1.6-.7 1.9-1.3.2-.6.2-1.1.1-1.3-.1-.3-.3-.4-.5-.5z"/>
+      </symbol>
+      <symbol id="svg-facebook" viewBox="0 0 24 24">
+        <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm3 8h-1.5c-.7 0-1.5.4-1.5 1.5V11h3l-.5 3h-2.5v7h-3v-7H8v-3h2.5V9.5C10.5 7.1 12.1 6 15 6h1v2z"/>
+      </symbol>
+      <symbol id="svg-instagram" viewBox="0 0 24 24">
+        <path d="M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.784.297-1.455.717-2.126 1.387C1.34 2.69 1.01 3.36.71 4.14.41 4.905.21 5.775.15 7.053.092 8.333.075 8.74.075 12s.015 3.667.072 4.947c.06 1.277.26 2.148.56 2.912.297.785.717 1.455 1.387 2.126 1.34 1.34 3.05 1.91 4.94 1.91s3.6-.57 4.94-1.91c.67-.67 1.09-1.34 1.387-2.126.3-.764.5-1.635.56-2.912.058-1.28.072-1.687.072-4.947s-.015-3.667-.072-4.947c-.06-1.277-.26-2.148-.56-2.912C21.99 3.36 21.66 2.69 21.36 2.02c-.67-.67-1.34-1.09-2.126-1.387-.764-.3-1.635-.5-2.912-.56C15.667.015 15.26 0 12 0zm0 2.16c3.203 0 3.585.012 4.85.07 1.17.055 1.805.248 2.227.415.562.217.96.477 1.382.896.42.42.68.82.896 1.382.167.422.36 1.057.413 2.227.058 1.265.07 1.646.07 4.85s-.012 3.585-.07 4.85c-.055 1.17-.248 1.805-.413 2.227-.217.562-.477.96-.896 1.382-.42.42-.82.68-1.382.896-.422.167-1.057.36-2.227.413-1.265.058-1.646.07-4.85.07zM12 6.162a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.88 1.44 1.44 0 000-2.88z"/>
+      </symbol>
+      <symbol id="svg-tiktok" viewBox="0 0 24 24">
+        <path d="M21 4H3C1.9 4 1 4.9 1 6v12c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm-4.1 11.1c-.6.2-1.2.3-1.9.3-1.6 0-3.1-.7-4.1-1.9v5.5H7V7h3.5v6.1c.3-.1.7-.2 1-.2 1.9 0 3.5 1.6 3.5 3.5 0 .5-.1 1-.3 1.4l.1.1 2.2 2.2h-3z"/>
+      </symbol>
+      <symbol id="svg-x" viewBox="0 0 24 24">
+        <path d="M18.9 1.1l-6.3 7.2-5.9-7.2H1.1l7.3 8.9L1.1 23h5.6l6.9-8 6.4 8h5.6L12 12.4 18.9 1.1zM14.9 19.8L5.4 3.7H8l9.5 16.1h-2.6z"/>
+      </symbol>
+      <symbol id="svg-check-circle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+        <path d="M22 4 12 14.01l-3-3"/>
+      </symbol>
+    </defs>
+  </svg>
+
+  <!-- NAV (Desktop) -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <!-- Brand Logo acts as HOME -->
+      <div class="brand" data-nav="index">
+          <div class="logo"><svg class="icon"><use xlink:href="#svg-scooter" /></svg></div>We Deliver
+      </div>
+      
+      <!-- Timer -->
+      <div class="nav-timer">
+          <div class="time" id="nav-date-time">Loading...</div>
+          <div class="countdown" id="nav-countdown">Checking hours...</div>
+      </div>
+
+      <!-- Nav Links -->
+      <div class="nav-links">
+        <a href="#" class="link" data-nav="restaurants">Restaurants</a>
+        <button class="button primary" data-nav="cart" id="nav-cart-btn">Cart (0)</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO / INDEX -->
+  <header id="view-index" class="container hero">
+    <div class="grid">
+      <!-- LEFT COLUMN (Mobile: Primary Content) -->
+      <div>
+        <div class="hero-brand">
+          <div class="hero-logo"><svg class="icon"><use xlink:href="#svg-scooter" /></svg></div>
+          <h1 class="hero-title">We Deliver</h1>
+        </div>
+        
+        <!-- Mobile Timer (Visible only on mobile homepage) -->
+        <div class="mobile-timer">
+            <div class="time" id="mobile-date-time">Loading...</div>
+            <div class="countdown" id="mobile-countdown">Checking hours...</div>
+        </div>
+
+        <!-- Real scooter slideshow + coal background -->
+        <div class="hero-bg" style="margin-top: 12px;">
+          <div class="ride-photos" aria-label="Real delivery scooters in action">
+            <img src="https://placehold.co/1600x900/0B0E10/D4AF37?text=We+exist+for+your+hunger.+We're+not+proud+of+it." alt="Delivery rider on scooter" />
+            <img src="https://placehold.co/1600x900/111418/D4AF37?text=Your+food+is+cold.+Blame+us." alt="Courier riding through the city" />
+            <img src="https://placehold.co/1600x900/0B0E10/D4AF37?text=Fast+enough+to+make+you+think+we+care." alt="Food delivery motorbike" />
+            <img src="https://placehold.co/1600x900/111418/D4AF37?text=Reliable.+Until+we're+not." alt="Delivery rider at night" />
+            <div class="sticker">WE DELIVER</div>
+          </div>
+        </div>
+        
+        <!-- Zone selection (single method) -->
+        <div class="zone-panel">
+          <div class="caption-title">Choose your area</div>
+          <div class="zones" id="quick-zones">
+            <div class="pill" data-zone="Kwaguqa" role="button" tabindex="0" aria-pressed="false">Kwaguqa</div>
+            <div class="pill" data-zone="Ackerville" role="button" tabindex="0" aria-pressed="false">Ackerville</div>
+            <div class="pill" data-zone="Lynnville" role="button" tabindex="0" aria-pressed="false">Lynnville</div>
+            <div class="pill" data-zone="Thusanang" role="button" tabindex="0" aria-pressed="false">Thusanang</div>
+            <div class="pill" data-zone="Clewer" role="button" tabindex="0" aria-pressed="false">Clewer</div>
+            <div class="pill" data-zone="Overline" role="button" tabindex="0" aria-pressed="false">Overline</div>
+          </div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:6px;justify-content:center">
+            <button class="button primary" data-nav="restaurants" id="hero-start">Start ordering</button>
+            <button class="button" data-nav="restaurants" id="hero-browse-rest">Browse restaurants</button>
+          </div>
+        </div>
+
+        <!-- Popular nearby shortcuts -->
+        <div class="card" style="margin-top:12px">
+          <div class="qtitle" style="font-weight:900">Popular nearby</div>
+          <!-- FIX: Changed from flex to a responsive grid to prevent squashing/bad wrapping -->
+          <div class="quick-row" id="quick-popular" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap:10px; padding-top:8px">
+            <!-- Dynamic content loaded here -->
+          </div>
+        </div>
+      </div>
+      
+      <!-- RIGHT COLUMN (Desktop only) -->
+      <div class="hero-right-column">
+        <!-- Operating Message -->
+        <div class="operating-message" id="operating-message">
+          <h3>We're here for your deliveries!</h3>
+          <p id="delivery-status">We are open for deliveries and orders during working hours and off-hours.</p>
+          <div class="contact-info">
+            <p><strong>Trading Hours:</strong></p>
+            <p>Monday - Friday: 8:00 AM - 8:00 PM</p>
+            <p>Saturday - Sunday: 9:00 AM - 7:00 PM</p>
+            <p><strong>Contact Us:</strong></p>
+            <!-- Social Media Buttons -->
+            <div class="social-buttons">
+              <a href="tel:+27794573805" class="social-btn call" aria-label="Call us">
+                <svg class="icon"><use xlink:href="#svg-phone" /></svg>
+              </a>
+              <a href="https://wa.me/27794573805" target="_blank" class="social-btn wa" aria-label="WhatsApp us">
+                <svg class="icon"><use xlink:href="#svg-whatsapp" /></svg>
+              </a>
+              <a href="#" class="social-btn fb" aria-label="Facebook">
+                <svg class="icon"><use xlink:href="#svg-facebook" /></svg>
+              </a>
+              <a href="#" class="social-btn ig" aria-label="Instagram">
+                <svg class="icon"><use xlink:href="#svg-instagram" /></svg>
+              </a>
+              <a href="#" class="social-btn tk" aria-label="TikTok">
+                <svg class="icon"><use xlink:href="#svg-tiktok" /></svg>
+              </a>
+              <a href="#" class="social-btn x" aria-label="X (Twitter)">
+                <svg class="icon"><use xlink:href="#svg-x" /></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Services grid -->
+        <div class="hero-card">
+          <div class="hero-services" aria-label="Our services">
+            <div class="svc"><div class="s-ico"><svg class="icon icon-fill"><use xlink:href="#svg-burger" /></svg></div><div class="s-name">Food</div><div class="s-desc">Restaurants & takeaways</div></div>
+            <div class="svc"><div class="s-ico"><svg class="icon icon-fill"><use xlink:href="#svg-grocery" /></svg></div><div class="s-name">Groceries</div><div class="s-desc">Quick household runs</div></div>
+            <div class="svc"><div class="s-ico"><svg class="icon icon-fill"><use xlink:href="#svg-bottle" /></svg></div><div class="s-name">Liquor</div><div class="s-desc">Local bottle stores</div></div>
+            <div class="svc"><div class="s-ico"><svg class="icon icon-fill"><use xlink:href="#svg-medicine" /></svg></div><div class="s-name">Medicine</div><div class="s-desc">Pharmacy pick‑ups</div></div>
+            <div class="svc" style="grid-column: 1 / -1;"><div class="s-ico"><svg class="icon icon-fill"><use xlink:href="#svg-scooter" /></svg></div><div class="s-name">Parcels</div><div class="s-desc">Kasi‑to‑kasi courier</div></div>
+          </div>
+        </div>
+        
+        <!-- Admin Demo Panel -->
+        <div class="admin-panel">
+            <div class="title">Admin Demo Panel</div>
+            <div class="btn-group">
+                <div id="admin-open-btn-wrapper"><button class="button" id="admin-force-open">Force Open</button></div>
+                <div id="admin-close-btn-wrapper"><button class="button danger" id="admin-force-close">Force Close</button></div>
+            </div>
+            <div class="muted small" style="text-align: center;">Target WhatsApp: <strong id="current-wa-number"></strong></div>
+            <div class="field">
+                <input type="tel" id="admin-wa-input" placeholder="0791234567 (10 digits)" pattern="^0\d{9}$" title="SA numbers start with 0 and have 10 digits"/>
+                <button class="button" id="admin-set-wa">Set Number</button>
+            </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- RESTAURANTS -->
+  <main id="view-restaurants" class="container section" style="display:none">
+    <div class="card" style="margin-bottom:14px;display:flex;align-items:end;justify-content:space-between;gap:12px;flex-wrap:wrap">
+      <div>
+        <div class="muted">DELIVERING TO</div>
+        <h2 id="zone-label">Your Zone</h2>
+      </div>
+      <button class="button" data-nav="index" id="change-area">Change area</button>
+    </div>
+    <div class="field search-field" style="margin-bottom:12px;">
+      <div><svg class="icon"><use xlink:href="#svg-search" /></svg></div>
+      <input id="rest-search" type="text" placeholder="Search restaurants..." aria-label="Search restaurants" />
+      <div><svg class="icon"><use xlink:href="#svg-enter" /></svg></div>
+    </div>
+    <div id="restaurant-list" class="grid-auto">
+        <!-- Dynamic content loaded here -->
+    </div>
+    
+    <!-- WhatsApp Order Card -->
+    <div class="card" id="whatsapp-order-card" style="margin-top: 16px; text-align: center; display: none;">
+        <h3 class="qtitle">Can't find what you need?</h3>
+        <p class="small muted" style="margin: 8px 0;">Order anything else in your area directly via WhatsApp.</p>
+        <button class="button whatsapp" id="order-anything-wa">
+            <svg class="icon" style="font-size: 20px;"><use xlink:href="#svg-whatsapp" /></svg>
+            Order Anything Now
+        </button>
+    </div>
+  </main>
+
+  <!-- MENU -->
+  <section id="view-menu" class="container section" style="display:none">
+    <div class="menu-banner" id="menu-banner"></div>
+    <div class="card" style="margin-top:12px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
+      <h2 id="menu-title">Restaurant</h2>
+      <!-- FIX: Added flex-wrap: wrap to this container -->
+      <div style="display:flex;gap:12px;align-items:center;flex:1;justify-content:flex-end; flex-wrap: wrap;">
+        <div class="field search-field" style="max-width:320px;">
+          <div><svg class="icon"><use xlink:href="#svg-search" /></svg></div>
+          <input id="menu-search" type="text" placeholder="Search this menu..." aria-label="Search menu" />
+          <div><svg class="icon"><use xlink:href="#svg-enter" /></svg></div>
+        </div>
+        <button class="button primary" data-nav="cart" id="view-cart-btn">View Cart (0)</button>
+      </div>
+    </div>
+    <div id="menu-list" class="menu-grid" style="margin-top:12px;"></div>
+    <div style="margin-top:12px"><button class="button" data-nav="restaurants">‹ Back</button></div>
+  </section>
+
+  <!-- CART -->
+  <section id="view-cart" class="container section" style="display:none">
+    <h2>Your Order</h2>
+    <div class="cart" style="margin-top:10px">
+      <div id="cart-items-container"></div>
+      <div class="total"><div>Total</div><div id="cart-total-price">R0.00</div></div>
+    </div>
+
+    <form id="delivery-form" class="card" style="margin-top:12px">
+      <h3 style="margin-bottom:8px">Delivery Details</h3>
+      <div class="grid-auto" style="grid-template-columns:repeat(auto-fit,minmax(240px,1fr))">
+        <div class="field"><div><svg class="icon"><use xlink:href="#svg-user" /></svg></div><input id="df-name" type="text" placeholder="Full name" required /></div>
+        <div class="field"><div><svg class="icon"><use xlink:href="#svg-phone" /></svg></div><input id="df-phone" type="tel" placeholder="Phone (e.g., 0812345678)" pattern="^0\d{9}$" title="South African numbers start with 0 and have 10 digits" required /></div>
+        <div class="field" style="grid-column:1/-1"><div><svg class="icon"><use xlink:href="#svg-address" /></svg></div><input id="df-address" type="text" placeholder="Delivery address" required /></div>
+        <div class="field" style="grid-column:1/-1"><div><svg class="icon"><use xlink:href="#svg-notes" /></svg></div><textarea id="df-notes" placeholder="Driver instructions (optional)"></textarea></div>
+      </div>
+    </form>
+
+    <div style="margin-top:12px;display:flex;gap:12px;flex-wrap:wrap">
+      <button class="button whatsapp" id="place-order">Order via WhatsApp</button>
+      <button class="button" data-nav="restaurants">‹ Back</button>
+    </div>
+  </section>
+  
+  <!-- ORDER SUCCESS PAGE -->
+  <section id="view-success" class="container section" style="display:none; text-align: center;">
+      <svg class="icon success-icon"><use xlink:href="#svg-check-circle" /></svg>
+      <h2 style="font-weight: 900;">Order Sent! (You owe us now)</h2>
+      <p class="muted" style="margin-top: 8px;">Your order has been sent to our drivers via WhatsApp. Your Order Number is <strong id="success-order-num"></strong>.</p>
+      
+      <div class="card" style="margin-top: 20px;">
+          <h3 style="font-weight: 900; margin-bottom: 12px;">Payment Options</h3>
+          <p class="small muted">Confirm payment with the driver or via the options below immediately to speed up delivery.</p>
+          <div class="payment-options">
+              <div class="payment-method">
+                  <strong>EFT / Bank Transfer</strong>
+                  <span>Account: We Deliver | Bank: FNB | Acc No: 629XXXXXX | Branch: 250655</span>
+              </div>
+              <div class="payment-method">
+                  <strong>eWallet / Cash Send</strong>
+                  <span>Send to: 079 457 3805 (Reference: Your Phone Number)</span>
+              </div>
+              <div class="payment-method">
+                  <strong>Cash on Delivery (COD)</strong>
+                  <span>Please have the exact amount ready for the driver.</span>
+              </div>
+          </div>
+      </div>
+      
+      <button class="button primary" data-nav="index" style="margin-top: 20px;">Back to Home</button>
+  </section>
+
+  <!-- APP FOOTER -->
+  <footer class="app-footer">
+      <p>&copy; 2025 We Deliver. All rights reserved. V1.1.2</p>
+      <em class="small">Disclaimer: App humor is dark and not reflective of delivery performance. (Unless you live on the fifth floor.)</em>
+  </footer>
+
+
+  <!-- MODAL: Order Preview/WhatsApp Confirm -->
+  <div id="order-modal-overlay" class="modal-overlay">
+    <div class="modal-box">
+      <button class="modal-close" id="order-modal-close">&times;</button>
+      <h3 style="font-weight: 900; margin-bottom: 10px;">Final Order Review</h3>
+      <div class="order-meta">
+        <div>Order # <strong id="modal-order-num"></strong></div>
+        <div id="modal-order-date"></div>
+      </div>
+      <div class="order-content" id="modal-order-content"></div>
+      <div class="modal-actions">
+          <button class="button whatsapp" id="modal-send-wa">Open WhatsApp</button>
+          <button class="button" id="modal-cancel">Cancel</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- MODAL: Simple Toast/Validation -->
+  <div id="toast-modal-overlay" class="modal-overlay">
+    <div class="modal-box" style="text-align: center; width: 300px;">
+      <button class="modal-close" id="toast-modal-close">&times;</button>
+      <h3 id="toast-title" style="font-weight: 900; margin-bottom: 8px;">Wait!</h3>
+      <p id="toast-message" class="muted" style="margin-bottom: 16px;">Message here.</p>
+      <button class="button primary" id="toast-okay">Okay</button>
+    </div>
+  </div>
+  
+  <!-- TOAST: Item Added Confirmation -->
+  <div class="toast-notification" id="item-added-toast">Added item to cart!</div>
+
+
+  <script>
+    // -----------------------------------------------------------
+    // ===== CONFIG & SETUP =====
+    // -----------------------------------------------------------
+    
+    // ❗️ UPDATE THIS: Default recipient for all WhatsApp orders (ZA 10-digit number)
+    const DEFAULT_WHATSAPP_NUMBER = '27794573805'; 
+    
+    // For local testing:
+    const DEMO_PREVIEW = true; // Set to true to show preview box instead of instantly opening WA
+    const WA_QUERY_OVERRIDE = new URLSearchParams(location.search).get('wanum');
+    
+    // Time definitions for trading hours (24-hour format)
+    const TRADING_HOURS = {
+        WEEKDAY_START: 8, // 8:00 AM
+        WEEKDAY_END: 20,  // 8:00 PM
+        WEEKEND_START: 9, // 9:00 AM
+        WEEKEND_END: 19   // 7:00 PM
+    };
+    
+    // Utility functions
+    const $ = (s) => document.querySelector(s);
+    const $$ = (s) => Array.from(document.querySelectorAll(s));
+    
+    let CURRENT_RESTAURANT_ID = null;
+    let ORDER_MESSAGE_CACHE = null;
+
+    // --- Local Storage Accessors ---
+    const getCart = () => { try { return JSON.parse(localStorage.getItem('weDeliverCart')) || []; } catch { return []; } };
+    const saveCart = (c) => localStorage.setItem('weDeliverCart', JSON.stringify(c));
+    const clearCart = () => localStorage.removeItem('weDeliverCart');
+    const getZone = () => localStorage.getItem('weDeliverZone');
+    const getOrderNum = () => parseInt(localStorage.getItem('weDeliverOrderNum') || '0', 10);
+    const incrementOrderNum = () => localStorage.setItem('weDeliverOrderNum', getOrderNum() + 1);
+    
+    // --- Admin/Number Overrides ---
+    function toIntlZa(n){
+      n = (n||'').replace(/[^0-9]/g,'');
+      if(n.startsWith('0') && n.length===10) return '27'+n.slice(1);
+      if(n.startsWith('27')) return n;
+      return n; // fallback
+    }
+    function getWaNumber(){
+      const custom = localStorage.getItem('weDeliver_admin_wa');
+      const raw = custom || WA_QUERY_OVERRIDE || DEFAULT_WHATSAPP_NUMBER;
+      return toIntlZa(raw);
+    } 
+
+    // --- Master Data (Restaurants/Menus) ---
+    const ALL_RESTAURANTS = [
+        { id: 1, name: "Kasi Kitchen", zone: "Kwaguqa", deliveryFee: 20.00, cuisine: "African", img: 'https://placehold.co/200x150/0B0E10/F2D36B?text=Kasi+Kitchen', menu: [
+            { name: 'Pap & Wors', price: 65.00, desc: 'Homestyle favourite.' },
+            { name: 'Amasi Milk', price: 15.00, desc: 'Fresh fermented milk.' },
+            { name: 'Chicken Feet', price: 35.00, desc: 'Grilled to perfection.' },
+        ]},
+        { id: 2, name: "Savory Bites", zone: "Ackerville", deliveryFee: 15.00, cuisine: "Fast Food", img: 'https://placehold.co/200x150/0B0E10/F2D36B?text=Savory+Bites', menu: [
+            { name: 'Classic Chips', price: 25.00, desc: 'Crispy golden fries.' },
+            { name: 'Chicken Wrap', price: 60.00, desc: 'Grilled chicken with salad.' },
+            { name: 'Double Cheese Burger', price: 75.00, desc: 'Extra cheesy goodness.' }
+        ]},
+        { id: 3, name: "Mama's Eats", zone: "Lynnville", deliveryFee: 20.00, cuisine: "Hearty Meals", img: 'https://placehold.co/200x150/0B0E10/F2D36B?text=Mama%27s+Eats', menu: [
+            { name: 'Beef Stew', price: 79.00, desc: 'Slow-cooked, rich gravy.' },
+            { name: 'Chakalaka Side', price: 18.00, desc: 'Spicy veggie relish.' },
+            { name: 'Lamb Curry', price: 95.00, desc: 'Hot and spicy lamb curry.' }
+        ]},
+        { id: 4, name: "Spoti's Grill", zone: "Kwaguqa", deliveryFee: 15.00, cuisine: "BBQ", img: 'https://placehold.co/200x150/0B0E10/F2D36B?text=Spoti%27s+Grill', menu: [
+            { name: 'BBQ Ribs', price: 120.00, desc: 'Half rack slow-smoked.' },
+            { name: 'Boerewors Roll', price: 40.00, desc: 'With caramelized onions.' }
+        ]},
+        { id: 5, name: "The Shisanyama Spot", zone: "Ackerville", deliveryFee: 25.00, cuisine: "BBQ", img: 'https://placehold.co/200x150/0B0E10/F2D36B?text=Shisanyama', menu: [
+            { name: 'Full Braai Platter', price: 180.00, desc: 'For sharing (or not).' },
+            { name: 'Pap & Gravy', price: 30.00, desc: 'Simple and comforting.' }
+        ]},
+        { id: 6, name: "Lynnville Liquids", zone: "Lynnville", deliveryFee: 30.00, cuisine: "Liquor", img: 'https://placehold.co/200x150/0B0E10/F2D36B?text=Liquor', menu: [
+            { name: 'Case of Cold Beer', price: 250.00, desc: '24 x 330ml bottles.' },
+            { name: 'Bottle of Gin', price: 320.00, desc: 'Local craft gin.' }
+        ]},
+        { id: 7, name: "Quick Groceries", zone: "Thusanang", deliveryFee: 10.00, cuisine: "Groceries", img: 'https://placehold.co/200x150/0B0E10/F2D36B?text=Groceries', menu: [
+            { name: 'Milk & Bread Combo', price: 45.00, desc: 'Emergency essentials.' },
+            { name: 'Snack Pack', price: 70.00, desc: 'Chips, sweets, and a drink.' }
+        ]},
+        { id: 8, name: "Phola Pharmacy", zone: "Thusanang", deliveryFee: 15.00, cuisine: "Medicine", img: 'https://placehold.co/200x150/0B0E10/F2D36B?text=Pharmacy', menu: [
+            { name: 'Headache Tablets', price: 50.00, desc: '12-pack, strong relief.' },
+            { name: 'Cough Syrup', price: 85.00, desc: 'The good stuff.' }
+        ]}
+    ];
+
+    // -----------------------------------------------------------
+    // ===== MASTER TIME AND STATUS CONTROL =====
+    // -----------------------------------------------------------
+
+    let IS_OPEN = false; // Master state tracker
+
+    function getNextTradingTime(now, startHour, endHour) {
+        let currentDay = now.getDay(); // 0 (Sun) to 6 (Sat)
+        let nowMinutes = now.getHours() * 60 + now.getMinutes();
+
+        // Convert target hours to minutes
+        const startMinutes = startHour * 60;
+        const endMinutes = endHour * 60;
+
+        // 1. Check if currently within hours for today
+        if (nowMinutes >= startMinutes && nowMinutes < endMinutes) {
+            // Store is open. Countdown is to closing time.
+            const closeTime = new Date(now);
+            closeTime.setHours(endHour, 0, 0, 0);
+            return { isOpen: true, time: closeTime, status: 'Closes in' };
+        }
+
+        // 2. Determine next opening time
+        let nextOpen = new Date(now);
+        nextOpen.setSeconds(0, 0); // Reset seconds and ms
+        let foundNextOpen = false;
+
+        // Case A: Today's hours are missed (already past closing time)
+        if (nowMinutes >= endMinutes) {
+            nextOpen.setDate(now.getDate() + 1); // Check tomorrow
+            currentDay = nextOpen.getDay();
+            
+            // Set time to tomorrow's start
+            if (currentDay >= 1 && currentDay <= 5) { // Weekday
+                nextOpen.setHours(TRADING_HOURS.WEEKDAY_START, 0, 0, 0);
+            } else { // Weekend
+                nextOpen.setHours(TRADING_HOURS.WEEKEND_START, 0, 0, 0);
+            }
+            foundNextOpen = true;
+
+        } 
+        // Case B: Before today's opening time
+        else if (nowMinutes < startMinutes) {
+            // Set time to today's start
+            nextOpen.setHours(startHour, 0, 0, 0);
+            foundNextOpen = true;
+        }
+
+        // Fallback: Check future days until next open time is found
+        while (!foundNextOpen) {
+            nextOpen.setDate(nextOpen.getDate() + 1);
+            currentDay = nextOpen.getDay();
+
+            if (currentDay >= 1 && currentDay <= 5) { // Weekday
+                nextOpen.setHours(TRADING_HOURS.WEEKDAY_START, 0, 0, 0);
+                foundNextOpen = true;
+            } else if (currentDay === 0 || currentDay === 6) { // Weekend
+                 nextOpen.setHours(TRADING_HOURS.WEEKEND_START, 0, 0, 0);
+                foundNextOpen = true;
+            }
+            // Note: If no hours are defined for a day, it skips that day.
+        }
+
+
+        return { isOpen: false, time: nextOpen, status: 'Opens in' };
+    }
+
+    function formatTimeDifference(ms) {
+        const totalSeconds = Math.max(0, Math.floor(ms / 1000));
+        const hours = Math.floor(totalSeconds / 3600);
+        const minutes = Math.floor((totalSeconds % 3600) / 60);
+        const seconds = totalSeconds % 60;
+
+        const pad = (n) => String(n).padStart(2, '0');
+        
+        // Return in HH:MM:SS format
+        if (hours > 24) return 'Over 24h';
+        return `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
+    }
+
+    function masterTimeUpdater() {
+        const now = new Date();
+        const day = now.getDay();
+        const isWeekday = day >= 1 && day <= 5;
+
+        // Determine current trading window
+        const start = isWeekday ? TRADING_HOURS.WEEKDAY_START : TRADING_HOURS.WEEKEND_START;
+        const end = isWeekday ? TRADING_HOURS.WEEKDAY_END : TRADING_HOURS.WEEKEND_END;
+
+        const result = getNextTradingTime(now, start, end);
+        
+        let isOpen = result.isOpen;
+        let countdownText = result.status;
+        let countdownMs = result.time.getTime() - now.getTime();
+        let countdownValue = formatTimeDifference(countdownMs);
+
+        // --- ADMIN OVERRIDE ---
+        const override = localStorage.getItem('weDeliver_admin_status');
+        if (override === 'OPEN') {
+            isOpen = true;
+            countdownText = 'Closing Soon';
+            countdownValue = 'DEMO MODE';
+        } else if (override === 'CLOSED') {
+            isOpen = false;
+            countdownText = 'Opening Soon';
+            countdownValue = 'DEMO MODE';
+        }
+        // --- END ADMIN OVERRIDE ---
+        
+        IS_OPEN = isOpen;
+
+        // 1. Update Date/Time and Countdown in ALL locations
+        const formattedTime = now.toLocaleTimeString('en-ZA', { hour: '2-digit', minute: '2-digit' });
+        const formattedDate = now.toLocaleDateString('en-ZA', { weekday: 'short', month: 'short', day: 'numeric' });
+
+        // Desktop
+        const navTime = $('#nav-date-time');
+        const navCountdown = $('#nav-countdown');
+        if (navTime) navTime.textContent = `${formattedTime} - ${formattedDate}`;
+        if (navCountdown) {
+            navCountdown.textContent = `${countdownText}: ${countdownValue}`;
+            navCountdown.classList.toggle('open', isOpen);
+            navCountdown.classList.toggle('closed', !isOpen);
+        }
+
+        // Mobile
+        const mobileTime = $('#mobile-date-time');
+        const mobileCountdown = $('#mobile-countdown');
+        if (mobileTime) mobileTime.textContent = `${formattedTime} - ${formattedDate}`;
+        if (mobileCountdown) {
+            mobileCountdown.textContent = `${countdownText}: ${countdownValue}`;
+            mobileCountdown.classList.toggle('open', isOpen);
+            mobileCountdown.classList.toggle('closed', !isOpen);
+        }
+
+        // 2. Update Operating Message and Button Status
+        let title, message;
+        if (IS_OPEN) {
+            title = "We're fired up!";
+            message = "Go on, your hunger deserves this. We're open and waiting for your order.";
+        } else {
+            title = "Ooooh, tough luck.";
+            message = "We're currently recharging. We'll deliver tomorrow, right after our coffee.";
+        }
+        
+        const statusElement = $('#delivery-status');
+        const messageHeader = $('#operating-message h3');
+        if (messageHeader) messageHeader.textContent = title;
+        if (statusElement) statusElement.textContent = message;
+
+        // 3. Enable/Disable Buttons & Cards (Critical Check)
+        const buttonsToDisable = [
+            '#hero-start', 
+            '#hero-browse-rest',
+            '#order-anything-wa'
+        ];
+        
+        buttonsToDisable.forEach(selector => {
+            const btn = $(selector);
+            if (btn) {
+                btn.disabled = !IS_OPEN;
+                btn.classList.toggle('disabled', !IS_OPEN);
+            }
+        });
+        
+        $$('.rcard, .rest').forEach(card => card.classList.toggle('disabled', !IS_OPEN));
+        
+        // Mobile Nav Links
+        $$('.nav-mobile .n-link').forEach(link => {
+            if (link.dataset.nav !== 'index') { // Don't disable the home button
+                link.classList.toggle('disabled', !IS_OPEN);
+            }
+        });
+        
+        // Admin Button Display Logic
+        const adminOverride = localStorage.getItem('weDeliver_admin_status');
+        const openWrapper = $('#admin-open-btn-wrapper');
+        const closeWrapper = $('#admin-close-btn-wrapper');
+
+        if (openWrapper && closeWrapper) {
+            if (adminOverride === 'OPEN') {
+                openWrapper.style.display = 'none';
+                closeWrapper.style.display = 'block';
+                document.documentElement.style.setProperty('--admin-open-display', 'none');
+                document.documentElement.style.setProperty('--admin-close-display', 'block');
+            } else if (adminOverride === 'CLOSED') {
+                openWrapper.style.display = 'block';
+                closeWrapper.style.display = 'none';
+                document.documentElement.style.setProperty('--admin-open-display', 'block');
+                document.documentElement.style.setProperty('--admin-close-display', 'none');
+            } else {
+                // Default display based on clock time
+                openWrapper.style.display = IS_OPEN ? 'none' : 'block';
+                closeWrapper.style.display = IS_OPEN ? 'block' : 'none';
+                document.documentElement.style.setProperty('--admin-open-display', IS_OPEN ? 'none' : 'block');
+                document.documentElement.style.setProperty('--admin-close-display', IS_OPEN ? 'block' : 'none');
+            }
+        }
+        
+        // Update admin WA number display
+        $('#current-wa-number').textContent = getWaNumber();
+    }
+
+    // -----------------------------------------------------------
+    // ===== VIEW LOGIC & NAVIGATION =====
+    // -----------------------------------------------------------
+    
+    // FIX: Function definition moved up to prevent ReferenceError
+    function updateCartCount(){
+      const count=getCart().reduce((n,i)=>n+i.qty,0);
+      
+      // Desktop Nav Button
+      const nbtn=$('#nav-cart-btn'); 
+      if(nbtn) nbtn.textContent = `Cart (${count})`;
+      
+      // Menu View Button
+      const btn=$('#view-cart-btn'); 
+      if(btn) btn.textContent = `View Cart (${count})`;
+      
+      // Mobile Nav Badge
+      const badge = $('#mobile-cart-badge');
+      if (badge) {
+        badge.textContent = count;
+        badge.style.display = count > 0 ? 'block' : 'none';
+      }
+    }
+
+
+    function showToast(toastTitle, toastMessage, isValidation = true, duration = 3000) {
+        const toastModal = $('#toast-modal-overlay');
+        const title = $('#toast-title');
+        const message = $('#toast-message');
+        const okayButton = $('#toast-okay');
+
+        title.textContent = toastTitle;
+        message.textContent = toastMessage;
+        
+        // Show validation modal (stays open until dismissed)
+        if (isValidation) {
+            toastModal.style.display = 'flex';
+            okayButton.onclick = () => { toastModal.style.display = 'none'; };
+        } 
+        // Show small confirmation toast (auto-hide)
+        else {
+            const confirmationToast = $('#item-added-toast');
+            confirmationToast.textContent = toastMessage;
+            confirmationToast.classList.add('show');
+            setTimeout(() => {
+                confirmationToast.classList.remove('show');
+            }, duration);
+        }
+    }
+    
+    function show(id){
+      // Hide all views
+      ['index','restaurants','menu','cart','success'].forEach(v=> $('#view-'+v).style.display = 'none');
+      // Show the target view
+      const view = $('#view-'+id);
+      if (view) view.style.display = 'block';
+
+      // Update active state for mobile nav
+      $$('.nav-mobile .n-link').forEach(n => {
+        n.classList.toggle('active', n.dataset.nav === id);
+      });
+
+      // Run view-specific logic
+      if(id==='restaurants') initRestaurants();
+      if(id==='cart') renderCart();
+      
+      // Scroll to top
+      window.scrollTo(0, 0);
+    }
+    
+    // --- Index View ---
+    function initIndex(){
+      const stored = getZone();
+      if(stored){
+        $$('#quick-zones .pill').forEach(x=>{
+          const isActive = x.dataset.zone===stored;
+          x.classList.toggle('active', isActive);
+          x.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+        });
+        // Rerender popular list if zone is stored
+        renderPopularRestaurants(stored);
+      } else {
+         // Clear active state and popular restaurants if no zone is stored
+        $$('#quick-zones .pill').forEach(x=>{ x.classList.remove('active'); x.setAttribute('aria-pressed', 'false'); });
+        $('#quick-popular').innerHTML = '<div class="muted small" style="text-align:center; padding: 20px;">Select a zone above to see popular restaurants.</div>';
+      }
+
+      $$('#quick-zones .pill').forEach(p=>{
+        const select = ()=>{
+          localStorage.setItem('weDeliverZone', p.dataset.zone);
+          $$('#quick-zones .pill').forEach(x=>{ x.classList.remove('active'); x.setAttribute('aria-pressed','false'); });
+          p.classList.add('active'); p.setAttribute('aria-pressed','true');
+          renderPopularRestaurants(p.dataset.zone);
+        };
+        p.addEventListener('click', select);
+        p.addEventListener('keydown', (e)=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); select(); }});
+      });
+      
+      // Popular quick shortcuts
+      // Event delegation handles this dynamically after renderPopularRestaurants runs
+    }
+    
+    function renderPopularRestaurants(zone) {
+        const popularContainer = $('#quick-popular');
+        const zoneRestaurants = ALL_RESTAURANTS.filter(r => r.zone === zone);
+        popularContainer.innerHTML = '';
+        
+        if (zoneRestaurants.length === 0) {
+            popularContainer.innerHTML = '<div class="muted small" style="text-align:center; padding: 20px;">No restaurants found in this area yet.</div>';
+            return;
+        }
+
+        zoneRestaurants.slice(0, 3).forEach(r => {
+            const isDisabled = !IS_OPEN;
+            const rcard = document.createElement('div');
+            rcard.className = `rcard ${isDisabled ? 'disabled' : ''}`;
+            rcard.setAttribute('data-restaurant', r.name);
+            rcard.setAttribute('tabindex', isDisabled ? '-1' : '0');
+            rcard.setAttribute('role', 'button');
+            rcard.innerHTML = `
+                <div class="ph" style="background-image:url('${r.img}')"></div>
+                <div>
+                    <h4>${r.name}</h4>
+                    <div class="small">${r.cuisine} • R${r.deliveryFee.toFixed(2)} Fee</div>
+                </div>
+            `;
+            
+            if (!isDisabled) {
+                rcard.addEventListener('click', () => openMenu(r.name));
+            }
+            popularContainer.appendChild(rcard);
+        });
+    }
+
+    // --- Restaurants View ---
+    function initRestaurants(){
+      const zone=getZone() || 'Unknown Zone';
+      $('#zone-label').textContent=zone;
+      
+      const listContainer = $('#restaurant-list');
+      listContainer.innerHTML = '';
+      
+      const zoneRestaurants = ALL_RESTAURANTS.filter(r => r.zone === zone);
+      const isClosed = !IS_OPEN;
+      const isAnyRestOpen = zoneRestaurants.length > 0;
+      
+      if (!isAnyRestOpen) {
+          listContainer.innerHTML = `<div class="muted small" style="text-align:center; padding: 30px;">
+                                        No partner restaurants found in ${zone}.
+                                        <br>Try the direct WhatsApp option below.
+                                     </div>`;
+      } else {
+        zoneRestaurants.forEach(r => {
+            const rcard = document.createElement('article');
+            rcard.className = `rest ${isClosed ? 'disabled' : ''}`;
+            rcard.setAttribute('data-restaurant', r.name);
+            rcard.innerHTML = `
+                <div class="ph" style="background-image:url('${r.img}')"></div>
+                <div>
+                    <h3>${r.name}</h3>
+                    <div class="muted">${r.cuisine} • R${r.deliveryFee.toFixed(2)} delivery</div>
+                </div>
+                <div><svg class="icon"><use xlink:href="#svg-chevron" /></svg></div>
+            `;
+            
+            if (!isClosed) {
+                rcard.addEventListener('click', () => openMenu(r.name));
+            }
+            listContainer.appendChild(rcard);
+        });
+      }
+      
+      // Control "Order Anything" card visibility
+      const whatsappCard = $('#whatsapp-order-card');
+      whatsappCard.style.display = isClosed ? 'none' : 'block';
+      
+      // Search functionality
+      const rs=$('#rest-search');
+      if(rs){ rs.value = ''; rs.oninput = ()=>{
+        const q=rs.value.trim().toLowerCase();
+        let resultsFound = false;
+        $$('#restaurant-list .rest').forEach(card=>{
+          const name=card.querySelector('h3').textContent.toLowerCase();
+          const isVisible = name.includes(q);
+          card.style.display = isVisible ? 'grid' : 'none';
+          if (isVisible) resultsFound = true;
+        });
+        
+        // Show "Order Anything" if search results are empty
+        whatsappCard.style.display = (!resultsFound && q.length > 0) ? 'block' : (isClosed ? 'none' : 'block');
+      }}
+    }
+
+    // --- Menu View ---
+    function openMenu(name){
+      const restaurant = ALL_RESTAURANTS.find(r => r.name === name);
+      if (!restaurant) return;
+      
+      CURRENT_RESTAURANT_ID = restaurant.id; // Set current restaurant lock
+      
+      $('#menu-title').textContent=name;
+      const banner=$('#menu-banner');
+      if(banner){ 
+          banner.style.backgroundImage = `linear-gradient(135deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.4) 100%), url('${restaurant.img}')`; 
+          banner.style.backgroundSize='cover'; 
+          banner.style.backgroundPosition='center'; 
+      }
+
+      const list=$('#menu-list'); list.innerHTML='';
+      restaurant.menu.forEach(it=>{
+        const el=document.createElement('div');
+        el.className='menu-item';
+        // Use JSON.stringify and data-item to safely pass data including apostrophes
+        el.innerHTML=`
+            <h3>${it.name}</h3>
+            <div class='muted'>${it.desc}</div>
+            <div class='price'>R${it.price.toFixed(2)}</div>
+            <button class='button primary' data-item='${JSON.stringify(it).replace(/'/g, "&apos;")}' data-name="${it.name}">Add</button>
+        `;
+        list.appendChild(el);
+      });
+      
+      // Search functionality
+      const ms=$('#menu-search');
+      if(ms){ ms.value = ''; ms.oninput=()=>{
+        const q=ms.value.trim().toLowerCase();
+        $$('#menu-list .menu-item').forEach(card=>{
+          const nameTxt=card.querySelector('h3').textContent.toLowerCase();
+          card.style.display = nameTxt.includes(q)?'grid':'none';
+        });
+      }}
+      
+      updateCartCount();
+      show('menu');
+    }
+
+    $('#menu-list').addEventListener('click', (e)=>{
+      const b=e.target.closest('[data-item]'); 
+      if(!b) return;
+      
+      const itemName = b.getAttribute('data-name');
+      // FIX: Replace &apos; back to ' before parsing
+      const itemData = JSON.parse(b.getAttribute('data-item').replace(/&apos;/g, "'"));
+      
+      const cart=getCart();
+      const currentRestaurantName = ALL_RESTAURANTS.find(r => r.id === CURRENT_RESTAURANT_ID).name;
+
+      // Check for multi-restaurant order bug
+      if (cart.length > 0) {
+        const firstItem = cart[0];
+        const firstRestaurant = ALL_RESTAURANTS.find(r => r.id === firstItem.restaurantId);
+        
+        if (firstItem.restaurantId !== CURRENT_RESTAURANT_ID) {
+            showToast("Slow Down, Turbo!", `You're already assembling an order from ${firstRestaurant.name}. Finish that one first, we're not a dating app for meals!`, true);
+            return;
+        }
+      }
+      
+      const ex=cart.find(x => x.name === itemName);
+      
+      if(ex) {
+          ex.qty += 1; 
+      } else {
+          cart.push({
+              name: itemData.name,
+              price: itemData.price,
+              qty: 1,
+              restaurantId: CURRENT_RESTAURANT_ID,
+              restaurantName: currentRestaurantName
+          });
+      }
+      
+      saveCart(cart); 
+      updateCartCount();
+      showToast("Added!", `"${itemName}" added to cart. You're welcome.`, false, 2000);
+    });
+
+    // --- Cart View ---
+    function renderCart(){
+      const cart=getCart();
+      const items=$('#cart-items-container');
+      const total=$('#cart-total-price');
+      items.innerHTML=''; let sum=0;
+      
+      if(cart.length===0){ 
+          items.innerHTML='<div class="muted" style="padding: 16px 0; text-align: center;">Your cart is empty. Browse restaurants to add items.</div>'; 
+          total.textContent='R0.00'; 
+          return; 
+      }
+      
+      // Display restaurant name above items
+      const restaurant = ALL_RESTAURANTS.find(r => r.id === cart[0].restaurantId);
+      if (restaurant) {
+          items.innerHTML = `<h3 style="font-weight:900; margin-bottom: 10px; color: ${IS_OPEN ? 'var(--coal)' : '#b00'};">Ordering from: ${restaurant.name}</h3>`;
+      }
+      
+      cart.forEach(i=>{
+        const line=i.price*i.qty; sum+=line;
+        const row=document.createElement('div'); row.className='row';
+        row.innerHTML=`<div>${i.name}</div>
+          <div class='qty'>
+            <button class='qbtn' aria-label='Decrease' data-dec='${i.name}'>−</button>
+            <div aria-live='polite'>${i.qty}</div>
+            <button class='qbtn' aria-label='Increase' data-inc='${i.name}'>+</button>
+          </div>
+          <div>R${line.toFixed(2)}</div>
+          <button class='remove' aria-label='Remove item' data-remove='${i.name}'>×</button>`;
+        items.appendChild(row);
+      });
+      total.textContent=`R${sum.toFixed(2)}`;
+    }
+
+    $('#cart-items-container').addEventListener('click',(e)=>{
+      const inc=e.target.closest('[data-inc]');
+      const dec=e.target.closest('[data-dec]');
+      const rem=e.target.closest('[data-remove]');
+      if(!inc && !dec && !rem) return;
+      
+      const cart=getCart();
+      const key=(inc||dec||rem).getAttribute('data-inc')|| (inc||dec||rem).getAttribute('data-dec') || (inc||dec||rem).getAttribute('data-remove');
+      const itemIndex = cart.findIndex(x => x.name === key);
+      const item = cart[itemIndex];
+      if(!item) return;
+      
+      if(inc) item.qty+=1;
+      if(dec){ item.qty-=1; if(item.qty<=0) cart.splice(itemIndex,1); }
+      if(rem){ cart.splice(itemIndex,1); }
+      
+      if (cart.length === 0) {
+          CURRENT_RESTAURANT_ID = null; // Unlock the cart
+      }
+      
+      saveCart(cart); renderCart(); updateCartCount();
+    });
+
+    // --- WhatsApp message (preview-first) ---
+    function generateWhatsApp(){
+      const cart=getCart();
+      if(cart.length===0){ showToast("Empty Cart, Bro.", "Look, we're good, but we can't deliver air. Add some food first.", true); return; }
+      
+      const zone=getZone() || 'Zone Not Selected';
+      const name=$('#df-name')?.value.trim();
+      const phone=$('#df-phone')?.value.trim();
+      const address=$('#df-address')?.value.trim();
+      const notes=$('#df-notes')?.value.trim();
+      
+      if(!name||!phone||!address){
+        showToast("Missing Details, Pal.", "We need your name, a working number, and a place to drop the goods. Try again.", true);
+        if(!name) { $('#df-name').focus(); return; }
+        if(!phone) { $('#df-phone').focus(); return; }
+        $('#df-address').focus();
+        return;
+      }
+
+      let total=0;
+      const orderNumber = `WD${String(getOrderNum() + 1).padStart(5, '0')}`;
+      const restaurantName = cart.length > 0 ? cart[0].restaurantName : 'N/A';
+      
+      const lines = [
+        `*WE DELIVER ORDER ${orderNumber}*`,
+        `*From:* ${restaurantName}`,
+        `*Delivery Zone:* ${zone}`,
+        '',
+        '*Customer Details:*',
+        `*Name:* ${name}`,
+        `*Phone:* ${phone}`,
+        `*Address:* ${address}`,
+      ];
+      if(notes) lines.push(`*Notes:* ${notes}`);
+      lines.push('', '*Order Items:*');
+      
+      cart.forEach(i=>{ const line=i.price*i.qty; total+=line; lines.push(`- ${i.qty}x ${i.name} (R${line.toFixed(2)})`); });
+      lines.push('', `*TOTAL (excl. delivery): R${total.toFixed(2)}*`, '', 'Please confirm this order and send payment (EFT/eWallet) details.');
+      
+      const msg = lines.join('\n');
+      ORDER_MESSAGE_CACHE = { msg, orderNumber };
+
+      // Open Modal for final confirmation
+      const modal = $('#order-modal-overlay');
+      $('#modal-order-num').textContent = orderNumber;
+      $('#modal-order-date').textContent = new Date().toLocaleDateString('en-ZA', { hour: '2-digit', minute: '2-digit' });
+      $('#modal-order-content').textContent = msg;
+      modal.style.display = 'flex';
+      
+      // Bind modal actions
+      $('#modal-send-wa').onclick = handleOrderConfirm;
+      $('#modal-cancel').onclick = () => { modal.style.display = 'none'; };
+    }
+    
+    function handleOrderConfirm() {
+        if (!ORDER_MESSAGE_CACHE) return;
+        
+        const { msg, orderNumber } = ORDER_MESSAGE_CACHE;
+        const waNumber = getWaNumber();
+        const link = `https://wa.me/${waNumber}?text=${encodeURIComponent(msg)}`;
+        
+        // Open WhatsApp in a new small popup window
+        window.open(link, 'whatsappPopup', 'width=600,height=700,resizable=yes,scrollbars=yes,toolbar=no,menubar=no');
+
+        // Update successful order UI
+        incrementOrderNum();
+        clearCart();
+        updateCartCount();
+        
+        // Update success page and navigate
+        $('#success-order-num').textContent = orderNumber;
+        show('success');
+        
+        // Close modal
+        $('#order-modal-overlay').style.display = 'none';
+        ORDER_MESSAGE_CACHE = null;
+        
+        // Optional: Show final toast confirming action
+        showToast("Sent!", `Order ${orderNumber} sent via WhatsApp. Go check the chat!`, false, 3000);
+    }
+    
+    // --- Order Anything (General WhatsApp) ---
+    $('#order-anything-wa').addEventListener('click', ()=>{
+        if (!IS_OPEN) {
+            showToast("Slow Your Roll!", "We are currently closed, you impatient human.", true);
+            return;
+        }
+        const waNumber = getWaNumber();
+        const zone = getZone() || 'Zone Not Selected';
+        const msg = `*WE DELIVER - GENERAL ORDER/QUERY*\n\n*Delivery Zone:* ${zone}\n\nI need help ordering something specific in my area.`;
+        const link = `https://wa.me/${waNumber}?text=${encodeURIComponent(msg)}`;
+        window.open(link, 'whatsappPopup', 'width=600,height=700,resizable=yes,scrollbars=yes,toolbar=no,menubar=no');
+    });
+
+
+    // -----------------------------------------------------------
+    // ===== INIT & EVENT BINDINGS =====
+    // -----------------------------------------------------------
+
+    // Listen to all nav links (desktop and mobile)
+    $$('[data-nav]').forEach(n=> n.addEventListener('click', (e)=>{
+      e.preventDefault();
+      const targetNav = n.dataset.nav;
+      
+      if (n.classList.contains('disabled')) {
+          showToast("Nah-ah-ah.", "The kitchen is closed, mate. Try again when the timer hits zero.", true);
+          return;
+      }
+      
+      if(targetNav ==='restaurants' && !getZone()){
+        showToast("Whoa there!", "We need to know where you are first. Pick a zone!", true);
+        return;
+      }
+      if(targetNav ==='cart' && !getZone()){
+        showToast("Whoa there!", "We need to know where you are first. Pick a zone!", true);
+        return;
+      }
+      show(targetNav);
+    }));
+    
+    // Admin Panel Actions
+    $('#admin-force-open').addEventListener('click', () => {
+        localStorage.setItem('weDeliver_admin_status', 'OPEN');
+        masterTimeUpdater(); // Force refresh
+    });
+    $('#admin-force-close').addEventListener('click', () => {
+        localStorage.setItem('weDeliver_admin_status', 'CLOSED');
+        masterTimeUpdater(); // Force refresh
+    });
+    $('#admin-set-wa').addEventListener('click', () => {
+        const input = $('#admin-wa-input');
+        const num = input.value.trim();
+        if (num.match(/^0\d{9}$/)) {
+            localStorage.setItem('weDeliver_admin_wa', num);
+            input.value = '';
+            showToast("Success!", `Admin WA set to: ${num}`, false, 3000);
+            masterTimeUpdater(); // Update display
+        } else {
+             showToast("Error!", "Please enter a valid 10-digit South African number starting with 0.", true);
+        }
+    });
+
+    document.getElementById('place-order').addEventListener('click', generateWhatsApp);
+    $('#order-modal-close').addEventListener('click', () => { $('#order-modal-overlay').style.display = 'none'; });
+    $('#toast-modal-close').addEventListener('click', () => { $('#toast-modal-overlay').style.display = 'none'; });
+    $('#toast-okay').addEventListener('click', () => { $('#toast-modal-overlay').style.display = 'none'; });
+    
+    // Handle clicks on brand logo (mobile and desktop)
+    $$('.brand').forEach(brand => brand.addEventListener('click', () => show('index')));
+
+
+    document.addEventListener('DOMContentLoaded',()=>{ 
+      // Initialize time once at start
+      masterTimeUpdater(); 
+      // Set interval for live updates (every 1 second)
+      setInterval(masterTimeUpdater, 1000); 
+
+      // Set initial admin WA number display
+      $('#current-wa-number').textContent = getWaNumber();
+      
+      initIndex();
+      updateCartCount();
+      
+      // Show initial view
+      show('index');
+    });
+    
+    // --- TESTING FUNCTIONS --- (Moved to bottom)
+    (function tests(){
+      const q=new URLSearchParams(location.search); if(q.get('test')!=='1') return;
+      const panel=document.createElement('div'); panel.id='tpanel'; panel.style.cssText='position:fixed;right:10px;bottom:10px;background:#fff;border:1px solid #ddd;padding:8px;border-radius:8px;max-width:320px;z-index:1000;font:12px/1.2 system-ui'; panel.innerHTML='<b>Dev Tests</b><div id="log"></div>'; document.body.appendChild(panel);
+      const log=(ok,m)=>{const d=document.createElement('div');d.style.color=ok?'#0a0':'#b00';d.textContent=(ok?'✓ ':'✗ ')+m;document.getElementById('log').appendChild(d)};
+      
+      // Force OPEN for testing purposes
+      localStorage.setItem('weDeliver_admin_status', 'OPEN');
+      masterTimeUpdater();
+      
+      try{
+        // 1. Zone Selection Test
+        const kwaguqaPill = document.querySelector('#quick-zones .pill[data-zone="Kwaguqa"]');
+        log(document.querySelectorAll('#quick-zones .pill').length === 6, 'Zone chips count = 6');
+        kwaguqaPill && kwaguqaPill.click();
+        log(getZone() === 'Kwaguqa', 'Zone chip selection persists');
+        
+        // 2. Navigation Test
+        const startButton = document.getElementById('hero-start');
+        startButton && startButton.click();
+        log($('#view-restaurants').style.display === 'block', 'Navigate to restaurants');
+
+        // 3. Search Test
+        const rs = $('#rest-search');
+        rs.value = 'Kasi'; 
+        rs.dispatchEvent(new Event('input'));
+        const visibleCards = [...document.querySelectorAll('#restaurant-list .rest')].filter(el => getComputedStyle(el).display !== 'none').length;
+        log(visibleCards >= 1, 'Restaurant search filters');
+
+        // 4. Open Menu Test
+        const kasiKitchenCard = document.querySelector('[data-restaurant="Kasi Kitchen"]');
+        kasiKitchenCard && kasiKitchenCard.click();
+        log($('#view-menu').style.display === 'block', 'Open menu');
+
+        // 5. Cart Logic Test (Adding)
+        const addBurger = document.querySelector('#menu-list button[data-name="Pap & Wors"]');
+        addBurger && addBurger.click();
+        addBurger && addBurger.click();
+        updateCartCount();
+        log(getCart().find(i => i.name === 'Pap & Wors')?.qty === 2, 'Cart item quantity is 2');
+
+        // 6. Navigate to Cart and Check Decrement/Remove
+        show('cart');
+        renderCart();
+        const firstDec = document.querySelector('#cart-items-container [data-dec]'); 
+        firstDec && firstDec.click();
+        renderCart();
+        log(getCart().find(i => i.name === 'Pap & Wors')?.qty === 1, 'Decrement works');
+        const removeBtn = document.querySelector('#cart-items-container [data-remove]'); 
+        removeBtn && removeBtn.click();
+        renderCart();
+        log(getCart().length === 0, 'Remove works');
+
+        // 7. Order Generation Test (Requires filling form)
+        // Add item back to cart to test order generation
+        const testItem = ALL_RESTAURANTS[0].menu[0];
+        saveCart([{name: testItem.name, price: testItem.price, qty: 1, restaurantId: ALL_RESTAURANTS[0].id, restaurantName: ALL_RESTAURANTS[0].name }]);
+        show('cart');
+        
+        // Fill form fields
+        $('#df-name').value = 'Test User';
+        $('#df-phone').value = '0712345678';
+        $('#df-address').value = '123 Sample Street';
+        
+        // Trigger order generation (shows modal)
+        document.getElementById('place-order').click();
+        log($('#order-modal-overlay').style.display === 'flex', 'Order modal appears');
+        
+        // Trigger modal confirmation (sends WA, navigates to success)
+        document.getElementById('modal-send-wa').click();
+        log($('#view-success').style.display === 'block', 'Navigates to success page');
+        
+        // Check WA message content (order number is incremented and fields are present)
+        const lastOrderNum = getOrderNum();
+        log(lastOrderNum > 0, 'Order number incremented');
+        
+        // Clean up
+        clearCart();
+        localStorage.removeItem('weDeliver_admin_status');
+        
+      }catch(e){ 
+          console.error("Test failed: ", e);
+          log(false, `Runtime Error: ${e.message}`);
+      }
+    })();
+  </script>
+</body>
+</html>
